@@ -114,7 +114,7 @@ def get_record(session_id):
   opened_session = session.open_session()
   user_id = get_user_id(session_id, opened_session)
   if user_id:
-    response = get_record(user_id, opened_session)
+    response = get_record_from_db(user_id, opened_session)
   session.close_session
   return response
   
