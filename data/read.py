@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from data.obj.models import Users, Sessions, Deck, Games
 
 
@@ -39,3 +40,21 @@ def get_decks(user_id, session):
   decks = session.query(Deck).filter_by(user_id=user_id).all()
 
   return decks
+
+def get_deck(deck_id, session):
+
+  deck = session.query(Deck).filter_by(deck_id=deck_id).first()
+
+  return deck
+
+def get_record(user_id, session):
+
+  wins = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id).scalar()
+  loss = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id).scalar()
+
+  if wins and loss :
+    return {
+      'wins': wins,
+      'loss': loss
+    }
+  return None

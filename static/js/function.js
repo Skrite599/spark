@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Search functionality
     if (searchInput) {
       searchInput.addEventListener('input', function() {
-  
-          debugger;
           const searchText = searchInput.value.toLowerCase();
           searchText.replace(/[.*+?^${}()|[\]\\]/g, '');
   
@@ -25,6 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
               }
           });
       });
+
+      searchInput.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const headers = new Headers();
+        headers.append('session-id', 'a06e2d2b-2245-4178-b652-720a71b95aa1')
+
+        fetch(e.target.href, {
+          headers: headers
+        }).catch(error => {
+          alert('Something Went Wrong' + error)
+        });
+      });
     }
 
     if (deckForm) {
@@ -41,6 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
           method: form.method,
           headers: headers,
           body: formData
+        }).then(
+          window.location.href = '/'
+        ).catch(error => {
+          alert('Something Went Wrong' + error);
         });
       });
     }

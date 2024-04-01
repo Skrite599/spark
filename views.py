@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
-from core.spark import get_decks
+from core.spark import get_decks, get_deck, get_record
 
 views = Blueprint(__name__, "views")
 
@@ -17,3 +17,14 @@ def index():
 def create_deck():
 
   return render_template('create-deck.html')
+
+@views.route('/deck/<deck-id>')
+def create_deck(deck_id):
+
+  deck = get_deck(deck_id)
+  record = get_record(request.headers)
+
+  deck['wins'] = record['wins'] if record['wins'] else None
+  deck['loss'] = record['loss'] if record['loss'] else None
+
+  return render_template('deck-profile.html')

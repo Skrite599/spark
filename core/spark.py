@@ -1,6 +1,6 @@
 from data.obj.db import SparkSession
 from data.write import insert_user, insert_deck, insert_game, insert_session
-from data.read import get_user_id, get_decks as get_decks_from_db
+from data.read import get_user_id, get_decks as get_decks_from_db, get_deck as get_deck_from_db, get_record as get_record_from_db
 import uuid
 
 
@@ -92,7 +92,6 @@ def get_decks(session_id):
       deck_obj['deck_score'] = deck.deck_score
       decks_obj.append(deck_obj)
     response = {'status': 'success', 'decks': decks_obj}
-    return response
   else:
     response = {
         'status': 'error',
@@ -101,3 +100,20 @@ def get_decks(session_id):
     }
   session.close_session()
   return response
+
+def get_deck(deck_id):
+  session = SparkSession()
+  opened_session = session.open_session()
+  deck = get_deck_from_db(deck_id, opened_session)
+  session.close_session()
+  return deck
+
+def get_record(session_id):
+  response = {}
+  session = SparkSession()
+  opened_session = session.open_session()
+  user_id = get_user_id(session_id, opened_session)
+  if user_id:
+    response = get_record(user_id, opened_session)
+  return response
+  
