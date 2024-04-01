@@ -20,7 +20,7 @@ def create_deck():
   return render_template('create-deck.html')
 
 
-@views.route('/deck/<string:deck_id>')
+@views.route('/deck/<deck_id>')
 def deck_profile(deck_id):
 
   deck = get_deck(deck_id)
