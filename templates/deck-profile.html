@@ -10,14 +10,6 @@
           <button onclick="window.location.href='/'">Home</button>
           <button onclick="window.location.href='/create-deck'">Create Deck</button>
         </div>
-        <ul>
-            <!-- <li>{{deck['deck_name']}}</li>
-            <li>{{deck['deck_score']}}</li>
-            {% if deck['record']['win'] and deck['record']['loss']%}
-                <li>win(s): {{deck['record']['win']}} loss: {{deck['record']['loss']}}</li>
-            {% else %}
-                <li>No Games Registered With This Deck</li>
-            {% endif %} -->
         <script type='text/javascript' src="{{ url_for('static', filename='js/function.js') }}"> </script>
         {{deck}}
         {{record}}
