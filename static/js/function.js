@@ -30,11 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
           deckItem.addEventListener('click', function(e) {
             e.preventDefault();
 
-            const headers = new Headers();
-            headers.append('session-id', 'a06e2d2b-2245-4178-b652-720a71b95aa1')
-
             fetch(e.target.href, {
-              headers: headers
+              headers: {
+                'session-id' : 'a06e2d2b-2245-4178-b652-720a71b95aa1'
+              }
             }).then(
               window.location.href = e.target.href
             ).catch(error => {
