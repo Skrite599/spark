@@ -13,13 +13,15 @@ def index():
 
   return render_template('index.html', decks=decks)
 
+
 @views.route('/create-deck')
 def create_deck():
 
   return render_template('create-deck.html')
 
-@views.route('/deck/<deck-id>')
-def create_deck(deck_id):
+
+@views.route('/deck/<string:deck_id>')
+def deck_profile(deck_id):
 
   deck = get_deck(deck_id)
   record = get_record(request.headers)
