@@ -1,0 +1,22 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spark</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body> 
+        <div class="nav-bar">
+          <button onclick="window.location.href='/create-deck'">Create Deck</button>
+        </div>
+        <div>
+            <input type="text" id="search-input" placeholder="Search Your Decks">
+        </div>
+        <ul id="deck-list">
+          {% for deck in decks %}
+            <li>{{deck['deck_name']}}</li>
+          {% endfor %}
+        </ul>
+        <script type='text/javascript' src="{{ url_for('static', filename='js/function.js') }}"> </script>
+    </body>
+</html>
