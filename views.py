@@ -26,7 +26,7 @@ def deck_profile(deck_id):
   deck = get_deck(deck_id)
   record = get_record(request.headers)
 
-  deck['wins'] = record['wins'] if record['wins'] else None
+  deck['wins'] = record['win'] if record['win'] else None
   deck['loss'] = record['loss'] if record['loss'] else None
 
   return render_template('deck-profile.html')
