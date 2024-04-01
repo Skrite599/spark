@@ -102,11 +102,17 @@ def get_decks(session_id):
   return response
 
 def get_deck(deck_id):
+  response = {}
   session = SparkSession()
   opened_session = session.open_session()
   deck = get_deck_from_db(deck_id, opened_session)
+  if deck:
+    response = {
+      'deck_score': deck.deck_score,
+      'deck_name': deck.deck_name
+    }
   session.close_session()
-  return deck
+  return response
 
 def get_record(session_id):
   response = {}
