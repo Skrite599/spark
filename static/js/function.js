@@ -35,7 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             fetch(e.target.href, {
               headers: headers
-            }).catch(error => {
+            }).then(
+              window.location.href = e.target.href
+            ).catch(error => {
               alert('Something Went Wrong' + error)
             });
         });
