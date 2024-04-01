@@ -24,17 +24,20 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
 
-      searchInput.addEventListener('click', function(e) {
-        e.preventDefault();
+      const deckProfile = deckList.querySelectorAll('li a');
 
-        const headers = new Headers();
-        headers.append('session-id', 'a06e2d2b-2245-4178-b652-720a71b95aa1')
+      deckProfile.forEach(deckItem => {
+        deckItem.addEventListener('click', function(e) {
+          e.preventDefault();
 
-        fetch(e.target.href, {
-          headers: headers
-        }).catch(error => {
-          alert('Something Went Wrong' + error)
-        });
+          const headers = new Headers();
+          headers.append('session-id', 'a06e2d2b-2245-4178-b652-720a71b95aa1')
+
+          fetch(e.target.href, {
+            headers: headers
+          }).catch(error => {
+            alert('Something Went Wrong' + error)
+          });
       });
     }
 
