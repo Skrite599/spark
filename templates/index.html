@@ -14,10 +14,9 @@
         </div>
         <ul id="deck-list">
           {% for deck in decks %}
-            <li><a href="/deck-profile/{{deck['deck_id']}}" id="deck-profile-{{deck['deck_id']}}">{{deck['deck_name']}}</a></li>
+            <li><a href="/deck/{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</a></li>
           {% endfor %}
         </ul>
         <script type='text/javascript' src="{{ url_for('static', filename='js/function.js') }}"> </script>
-        {{decks}}
     </body>
 </html>
