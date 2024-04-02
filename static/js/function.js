@@ -89,10 +89,13 @@ document.addEventListener('DOMContentLoaded', function() {
           method: form.method,
           body: formData
         }).then((response) => {
-          console.log(response)
-          if (response['status'] === 'success') window.location.href = '/'
+          console.log(response);
+          if (response['status'] === 'success') {
+            window.location.href = '/'
+          }
         }).catch(error => {
           alert('Something Went Wrong' + error);
       });
-    }
+    })
+  }
 });

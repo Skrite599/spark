@@ -35,7 +35,7 @@ def deck_profile(deck_id):
   return render_template('deck-profile.html', deck=deck)
 
 @views.route('/create-game')
-def deck_profile():
+def create_game():
 
   return render_template('create-game.html')
 
