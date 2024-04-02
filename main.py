@@ -6,6 +6,7 @@ from views import views
 
 app = Flask(__name__)
 app.register_blueprint(views, url_prefix='/')
+app.secret_key = 'spark-key'
 CORS(app)
 
 
