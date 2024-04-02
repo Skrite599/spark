@@ -32,7 +32,7 @@ def deck_profile(deck_id):
   deck['win'] = record['win'] if record['win'] else None
   deck['loss'] = record['loss'] if record['loss'] else None
 
-  return render_template('deck-profile.html', deck=deck, record=record, headers=request.headers)
+  return render_template('deck-profile.html', deck=deck)
 
 @views.route('/login')
 def login():
