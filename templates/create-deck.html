@@ -10,7 +10,7 @@
           <button onclick="window.location.href='/'">Home</button>
           <button onclick="window.location.href='/create-game'">Create Game</button>
         </div>
-        <form id='submit-deck' action="/api/deck" method="post">
+        <form id='submit-deck' action="/api/deck" method="post" onsubmit="submitDeck(this)">
           
             <label for="deck-name">Deck Name:</label>
             <input type="text" id="deck-name" name="deck_name" required><br>
@@ -20,6 +20,6 @@
   
             <input type="submit" value="Submit">
         </form>
-        <script type='text/javascript' src="{{ url_for('static', filename='js/function.js') }}"> </script>
+        <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"> </script>
     </body>
 </html>

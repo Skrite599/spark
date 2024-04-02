@@ -26,20 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
 
-      const deckProfile = deckList.querySelectorAll('li a');
+      // const deckProfile = deckList.querySelectorAll('li a');
 
-      deckProfile.forEach(deckItem => {
-        deckItem.addEventListener('click', function(e) {
-          e.preventDefault();
+      // deckProfile.forEach(deckItem => {
+      //   deckItem.addEventListener('click', function(e) {
+      //     e.preventDefault();
 
-          fetch(e.target.href, {
-          }).then(
-            window.location.href = e.target.href
-          ).catch(error => {
-            alert('Something Went Wrong' + error)
-          });
-        });
-      })
+      //     fetch(e.target.href, {
+      //     }).then(
+      //       window.location.href = e.target.href
+      //     ).catch(error => {
+      //       alert('Something Went Wrong' + error)
+      //     });
+      //   });
+      // })
     }
 
     if (deckForm) {
