@@ -15,7 +15,7 @@ def server_login():
     data = request.form
     response = login(data)
     if response:
-      session['username'] = data.username
+      session['username'] = data.get('username')
       session['user_id'] = response['user_id']
       return redirect(url_for('index'))
 
