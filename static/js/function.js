@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const deckList = document.getElementById('deck-list');
     const deckForm = document.getElementById('submit-deck');
-    const loginForm = document.getElementById('login-form')
+    const loginForm = document.getElementById('login-form');
+    const gameForm = document.getElementById('submit-game');
 
     // Search functionality
     if (searchInput) {
@@ -32,9 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
           e.preventDefault();
 
           fetch(e.target.href, {
-            headers: {
-              'session-id' : 'a06e2d2b-2245-4178-b652-720a71b95aa1'
-            }
           }).then(
             window.location.href = e.target.href
           ).catch(error => {
@@ -77,6 +75,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }).catch(error => {
           alert('Something Went Wrong' + error);
         });
+      });
+    }
+
+    if (gameForm) {
+      gameForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: form.method,
+          body: formData
+        }).then((response) => {
+          console.log(response)
+          if (response['status'] === 'success') window.location.href = '/'
+        }).catch(error => {
+          alert('Something Went Wrong' + error);
       });
     }
 });

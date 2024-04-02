@@ -32,10 +32,12 @@ def server_submit_deck():
 
 @app.route('/api/game', methods=['POST'])
 def server_submit_game():
-  if request.is_json:
-    data = request.json
-    response = submit_game(data)
+  if request.form and 'user_id' in session:
+    data = request.form
+    user_id = session['user_id']
+    response = submit_game(data, user_id)
     return jsonify(response), 200
+
 
 
 @app.route('/api/deck', methods=['GET'])

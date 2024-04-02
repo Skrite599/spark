@@ -27,12 +27,17 @@ def deck_profile(deck_id):
 
   deck = get_deck(deck_id)
   user_id = session['user_id']
-  record = get_record(user_id)
+  record = get_record(user_id, deck_id)
 
   deck['win'] = record['win'] if record['win'] else None
   deck['loss'] = record['loss'] if record['loss'] else None
 
   return render_template('deck-profile.html', deck=deck)
+
+@views.route('/create-game')
+def deck_profile():
+
+  return render_template('create-game.html')
 
 @views.route('/login')
 def login():
