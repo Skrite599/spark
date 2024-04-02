@@ -16,12 +16,12 @@ def insert_user(username, session):
   return user.user_id if user else None
 
 
-def insert_deck(deck_name, user_id, session):
+def insert_deck(deck_name, deck_score, user_id, session):
 
   deck = None
 
   try:
-    deck = Deck(deck_name=deck_name, user_id=user_id)
+    deck = Deck(deck_name=deck_name, deck_score=deck_score, user_id=user_id)
 
     session.add(deck)
 

@@ -23,9 +23,10 @@ def server_login():
 
 @app.route('/api/deck', methods=['PUT', 'POST'])
 def server_submit_deck():
-  if request.form:
+  if request.form and 'user_id' in session:
     data = request
-    response = create_deck(data)
+    user_id = session['user_id']
+    response = create_deck(data, user_id)
     return jsonify(response), 200
 
 

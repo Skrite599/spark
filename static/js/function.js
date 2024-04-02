@@ -51,16 +51,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const form = e.target;
         const formData = new FormData(form);
 
-        const headers = new Headers();
-        headers.append('session-id', 'a06e2d2b-2245-4178-b652-720a71b95aa1');
-
         fetch(form.action, {
           method: form.method,
-          headers: headers,
           body: formData
-        }).then(
-          window.location.href = '/'
-        ).catch(error => {
+        }).then((response) => {
+          console.log(response)
+        }).catch(error => {
           alert('Something Went Wrong' + error);
         });
       });

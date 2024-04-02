@@ -11,14 +11,16 @@ def create_user(username):
   session.close_session()
 
 
-def create_deck(deck_data):
+def create_deck(deck_data, user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  user_id = get_user_id(deck_data.headers, opened_session)
   deck_data = deck_data.form
   deck_name = deck_data['deck_name']
-  deck_id = insert_deck(deck_name, user_id, opened_session)
+  deck_score = 0
+  if deck_data['deck_score']:
+    deck_score = deck_data['deck_score']
+  deck_id = insert_deck(deck_name, deck_score, user_id, opened_session)
   if deck_id:
     response = {
         'status': 'success',
@@ -113,11 +115,10 @@ def get_deck(deck_id):
   session.close_session()
   return response
 
-def get_record(session_id):
+def get_record(user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  user_id = get_user_id(session_id, opened_session)
   if user_id:
     response = get_record_from_db(user_id, opened_session)
   session.close_session
