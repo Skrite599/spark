@@ -49,12 +49,12 @@ def get_deck(deck_id, session):
 
 def get_record(user_id, session):
 
-  wins = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id).scalar()
+  win = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id).scalar()
   loss = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id).scalar()
 
-  if wins and loss :
+  if win and loss :
     return {
-      'wins': wins,
+      'win': win,
       'loss': loss
     }
   return None
