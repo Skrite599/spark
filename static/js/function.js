@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
           body: formData
         }).then((response) => {
           console.log(response);
-          if (response['status'] === 'success') {
+          if (response['status'] == 200) {
             window.location.href = '/'
           }
         }).catch(error => {
