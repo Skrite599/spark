@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session
 
 from core.spark import get_decks, get_deck, get_record
 
@@ -8,7 +8,9 @@ views = Blueprint(__name__, "views")
 @views.route('/')
 def index():
 
-  decks = get_decks({"session-id": "a06e2d2b-2245-4178-b652-720a71b95aa1"})
+  if 'user_id' in session:
+    user_id = session['user_id']
+  decks = get_decks(user_id)
   decks = decks['decks']
 
   return render_template('index.html', decks=decks)
@@ -30,3 +32,8 @@ def deck_profile(deck_id):
   # deck['loss'] = record['loss'] if record['loss'] else None
 
   return render_template('deck-profile.html', deck=deck, record=record, headers=request.headers)
+
+@views.route('/login')
+def login():
+
+  return render_template('login.html')

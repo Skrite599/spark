@@ -56,8 +56,8 @@ def submit_game(game_data):
 
 def login(user_data):
   username = user_data['username']
-  session_token = process_login(username)
-  return session_token
+  response = process_login(username)
+  return response
 
 
 def process_login(username):
@@ -68,20 +68,19 @@ def process_login(username):
   response = {}
   if not user_id:
     create_user(username)
+    response['message'] = 'created user'
     return process_login(username)
   else:
-    session_id = str(uuid.uuid4())
-    insert_session(session_id, user_id, opened_session)
-    response = {'login': 'success', 'session_id': session_id}
+    response['status'] = 'success'
+    response['user_id'] = user_id
   session.close_session()
   return response
 
 
-def get_decks(session_id):
+def get_decks(user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  user_id = get_user_id(session_id, opened_session)
   if user_id:
     decks = get_decks_from_db(user_id, opened_session)
     decks_obj = []

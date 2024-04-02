@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session, url_for, redirect
 from flask_cors import CORS
 
 from core.spark import create_deck, submit_game, login, get_decks
@@ -11,10 +11,13 @@ CORS(app)
 
 @app.route('/api/login', methods=['POST'])
 def server_login():
-  if request.is_json:
-    data = request.json
+  if request.form:
+    data = request.form
     response = login(data)
-    return jsonify(response), 200
+    if response:
+      session['username'] = data.username
+      session['user_id'] = response['user_id']
+      return redirect(url_for('index'))
 
 
 @app.route('/api/deck', methods=['PUT', 'POST'])
