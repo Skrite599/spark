@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, redirect, url_for, session
 
 from core.spark import get_decks, get_deck, get_record
 
@@ -37,7 +37,14 @@ def deck_profile(deck_id):
 @views.route('/create-game')
 def create_game():
 
-  return render_template('create-game.html')
+  if 'user_id' not in session:
+    return redirect(url_for('login'))
+  
+  user_id = session['user_id']
+  decks = get_decks(user_id)
+  decks = decks['decks']
+
+  return render_template('create-game.html', decks=decks)
 
 @views.route('/login')
 def login():
