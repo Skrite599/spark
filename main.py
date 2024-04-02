@@ -18,7 +18,7 @@ def server_login():
     if response:
       session['username'] = data.get('username')
       session['user_id'] = response['user_id']
-      return redirect(url_for('index'))
+      return redirect(url_for('views.index'))
 
 
 @app.route('/api/deck', methods=['PUT', 'POST'])
