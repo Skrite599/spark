@@ -30,7 +30,7 @@ function submitDeck(e) {
         body: formData
     }).then((response) => {
         console.log(response);
-        if (response['status'] == 200) window.location.href = '/'
+        if (response.ok) window.location.href = '/'
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
@@ -47,7 +47,7 @@ function submitGame(e) {
         body: formData
     }).then((response) => {
         console.log(response);
-    if (response['status'] == 200) window.location.href = '/'
+        if (response.ok) window.location.href = '/'
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
