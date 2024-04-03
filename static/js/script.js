@@ -36,14 +36,35 @@ function submitDeck(e) {
     });
 }
 
-function submitGame(e) {
+function submitGame(form_data) {
+
+    var request_body = {};
+
+    // if (form_data['deck_name'] && form_data['game_win'] && form_data['game_loss']) {
+    //     request_body = {
+    //         'deck_name' : form_data['deck_name'],
+    //         'game_win' : form_data['game_win'],
+    //         'game_loss' : form_data['game_loss']
+    //     }
+    // }
+
+    form_data.forEach((value, key) => {
+        request_body[key] = value;
+    });
+
+    var request_body = JSON.stringify(jsonData);
+
+    console.log(request_body);
 
     fetch('/api/game', {
         method: 'POST',
-        body: e
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: request_body
     }).then((response) => {
         console.log(response);
-        if (response.ok) window.location.href = '/';
+        if (response['status'] == 'success') window.location.href = '/';
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });

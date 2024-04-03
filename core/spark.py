@@ -39,7 +39,7 @@ def submit_game(game_data, user_id):
   opened_session = session.open_session()
   win = game_data.get('game_win')
   loss = game_data.get('game_loss')
-  deck_id = game_data['deck_name']
+  deck_id = game_data.get('deck_name')
   deck_id = deck_id[5:]
   game_id = insert_game(user_id, deck_id, win, loss, opened_session)
   if game_id:
