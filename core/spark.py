@@ -1,7 +1,6 @@
 from data.obj.db import SparkSession
 from data.write import insert_user, insert_deck, insert_game, insert_session
 from data.read import get_user_id, get_decks as get_decks_from_db, get_deck as get_deck_from_db, get_record as get_record_from_db
-import uuid
 
 
 def create_user(username):
@@ -15,10 +14,9 @@ def create_deck(deck_data, user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  deck_data = deck_data.form
-  deck_name = deck_data['deck_name']
+  deck_name = deck_data.get('deck_name')
   deck_score = 0
-  if deck_data['deck_score']:
+  if deck_data.get('deck_score'):
     deck_score = deck_data['deck_score']
   deck_id = insert_deck(deck_name, deck_score, user_id, opened_session)
   if deck_id:
@@ -55,7 +53,7 @@ def submit_game(game_data, user_id):
 
 
 def login(user_data):
-  username = user_data['username']
+  username = user_data.get('username')
   response = process_login(username)
   return response
 

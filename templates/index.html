@@ -11,7 +11,7 @@
           <button onclick="window.location.href='/create-game'">Create Game</button>
         </div>
         <div>
-            <input type="text" id="search-input" placeholder="Search Your Decks" onchange="populateSearch(this)">
+            <input type="text" id="search-input" placeholder="Search Your Decks" oninput="return populateSearch(this)">
         </div>
         <ul id="deck-list">
           {% for deck in decks %}

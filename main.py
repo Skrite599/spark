@@ -12,19 +12,18 @@ CORS(app)
 
 @app.route('/api/login', methods=['POST'])
 def server_login():
-  if request.form:
-    data = request.form
+  if request.is_json:
+    data = request.json
     response = login(data)
-    if response:
-      session['username'] = data.get('username')
-      session['user_id'] = response['user_id']
-      return redirect(url_for('views.index'))
+    session['username'] = data.get('username')
+    session['user_id'] = response['user_id']
+    return jsonify(response), 200
 
 
 @app.route('/api/deck', methods=['PUT', 'POST'])
 def server_submit_deck():
-  if request.form and 'user_id' in session:
-    data = request
+  if request.is_json and 'user_id' in session:
+    data = request.json
     user_id = session['user_id']
     response = create_deck(data, user_id)
     return jsonify(response), 200
