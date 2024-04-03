@@ -63,8 +63,8 @@ function submitGame(form_data) {
     }).then((response) => {
         response.json().then((data) => {
             console.log(data);
+            if (data['status'] == 'success') window.location.href = '/';
         })
-        // if (response['status'] == 'success') window.location.href = '/';
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
