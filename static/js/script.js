@@ -40,17 +40,13 @@ function submitGame(form_data) {
 
     var request_body = {};
 
-    // if (form_data['deck_name'] && form_data['game_win'] && form_data['game_loss']) {
-    //     request_body = {
-    //         'deck_name' : form_data['deck_name'],
-    //         'game_win' : form_data['game_win'],
-    //         'game_loss' : form_data['game_loss']
-    //     }
-    // }
-
-    form_data.forEach((value, key) => {
-        request_body[key] = value;
-    });
+    if (form_data['deck_name'] && form_data['game_win'] && form_data['game_loss']) {
+        request_body = {
+            'deck_name' : form_data['deck_name'],
+            'game_win' : form_data['game_win'],
+            'game_loss' : form_data['game_loss']
+        }
+    }
 
     var request_body = JSON.stringify(jsonData);
 
