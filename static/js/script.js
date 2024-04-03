@@ -61,7 +61,9 @@ function submitGame(form_data) {
         },
         body: request_body
     }).then((response) => {
-        console.log('response.json()', response.json());
+        response.json().then((data) => {
+            console.log(data);
+        })
         // if (response['status'] == 'success') window.location.href = '/';
     }).catch(error => {
         alert('Something Went Wrong' + error);
