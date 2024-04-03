@@ -48,7 +48,7 @@ function submitGame(form_data) {
         }
     }
 
-    var request_body = JSON.stringify(jsonData);
+    var request_body = JSON.stringify(request_body);
 
     console.log(request_body);
 
