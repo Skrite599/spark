@@ -37,17 +37,17 @@ function submitDeck(e) {
 }
 
 function submitGame(e) {
-    console.log(e.elements);
 
-    // fetch('/api/game', {
-    //     method: 'POST',
-    //     body: formData
-    // }).then((response) => {
-    //     console.log(response);
-    //     if (response.ok) window.location.href = '/';
-    // }).catch(error => {
-    //     alert('Something Went Wrong' + error);
-    // });
+    fetch('/api/game', {
+        method: 'POST',
+        body: e
+    }).then((response) => {
+        console.log(response);
+        if (response.ok) window.location.href = '/';
+    }).catch(error => {
+        alert('Something Went Wrong' + error);
+    });
+    
     return false
 }
 
