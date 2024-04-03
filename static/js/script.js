@@ -37,18 +37,17 @@ function submitDeck(e) {
 }
 
 function submitGame(e) {
-    const form = e.target;
-    const formData = new FormData(form);
+    console.log(e);
 
-    fetch('/api/game', {
-        method: 'POST',
-        body: formData
-    }).then((response) => {
-        console.log(response);
-        if (response.ok) window.location.href = '/';
-    }).catch(error => {
-        alert('Something Went Wrong' + error);
-    });
+    // fetch('/api/game', {
+    //     method: 'POST',
+    //     body: formData
+    // }).then((response) => {
+    //     console.log(response);
+    //     if (response.ok) window.location.href = '/';
+    // }).catch(error => {
+    //     alert('Something Went Wrong' + error);
+    // });
     return false
 }
 
