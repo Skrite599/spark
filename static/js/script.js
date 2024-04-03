@@ -25,12 +25,12 @@ function submitDeck(e) {
     const form = e.target;
     const formData = new FormData(form);
 
-    fetch(form.action, {
-        method: form.method,
+    fetch('/api/deck', {
+        method: 'POST',
         body: formData
     }).then((response) => {
         console.log(response);
-        if (response.ok) window.location.href = '/'
+        if (response.ok) window.location.href = '/';
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
@@ -42,12 +42,12 @@ function submitGame(e) {
     const form = e.target;
     const formData = new FormData(form);
 
-    fetch(form.action, {
-        method: form.method,
+    fetch('/api/game', {
+        method: 'POST',
         body: formData
     }).then((response) => {
         console.log(response);
-        if (response.ok) window.location.href = '/'
+        if (response.ok) window.location.href = '/';
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
