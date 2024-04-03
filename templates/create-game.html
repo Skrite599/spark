@@ -10,7 +10,7 @@
           <button onclick="window.location.href='/'">Home</button>
           <button onclick="window.location.href='/create-deck'">Create Deck</button>
         </div>
-        <form id='submit-game' onsubmit="return submitGame(this)">
+        <form id='submit-game' onsubmit="submitGame(this)">
             <label for="deck-name">Deck</label>
             <select id="deck-selector" name="deck_name">
                 {% for deck in decks %}

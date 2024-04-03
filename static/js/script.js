@@ -36,9 +36,10 @@ function submitDeck(e) {
     });
 }
 
-console.log(document.querySelector('#submit-game'));
-
 function submitGame(e) {
+    console.log(e)
+
+    e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
@@ -52,8 +53,6 @@ function submitGame(e) {
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
-
-    e.preventDefault();
 }
 
 function login(e) {
