@@ -40,11 +40,13 @@ function submitGame(form_data) {
 
     var request_body = {};
 
+    console.log(form_data);
+
     if (form_data['deck_name'] && form_data['game_win'] && form_data['game_loss']) {
         request_body = {
-            'deck_name' : form_data['deck_name'],
-            'game_win' : form_data['game_win'],
-            'game_loss' : form_data['game_loss']
+            'deck_name' : form_data['deck_name'].value,
+            'game_win' : form_data['game_win'].value,
+            'game_loss' : form_data['game_loss'].value
         }
     }
 
