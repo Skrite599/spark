@@ -36,6 +36,8 @@ function submitDeck(e) {
     });
 }
 
+console.log(document.querySelector('#submit-game'));
+
 function submitGame(e) {
     e.preventDefault();
 
