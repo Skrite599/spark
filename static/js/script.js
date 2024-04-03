@@ -37,10 +37,6 @@ function submitDeck(e) {
 }
 
 function submitGame(e) {
-    console.log(e)
-
-    e.preventDefault();
-
     const form = e.target;
     const formData = new FormData(form);
 
@@ -53,6 +49,7 @@ function submitGame(e) {
     }).catch(error => {
         alert('Something Went Wrong' + error);
     });
+    return false
 }
 
 function login(e) {
