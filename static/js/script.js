@@ -37,7 +37,7 @@ function submitDeck(e) {
 }
 
 function submitGame(e) {
-    console.log(e);
+    console.log(e.elements);
 
     // fetch('/api/game', {
     //     method: 'POST',
