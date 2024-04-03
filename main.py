@@ -37,6 +37,7 @@ def server_submit_game():
     user_id = session['user_id']
     response = submit_game(data, user_id)
     return jsonify(response), 200
+  return jsonify(request)
 
 
 

@@ -48,7 +48,7 @@ function submitGame(e) {
         alert('Something Went Wrong' + error);
     });
     
-    return false
+    return false;
 }
 
 function login(e) {
