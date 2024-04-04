@@ -8,16 +8,23 @@ views = Blueprint(__name__, "views")
 @views.route('/')
 def index():
 
+  loggedin = False
+  decks = []
+
   if 'user_id' in session:
     user_id = session['user_id']
-  decks = get_decks(user_id)
-  decks = decks['decks']
+    loggedin = True
+    decks = get_decks(user_id)
+    decks = decks['decks']
 
-  return render_template('index.html', decks=decks)
+  return render_template('index.html', decks=decks, loggedin=loggedin)
 
 
 @views.route('/create-deck')
 def create_deck():
+
+  if 'user_id' not in session:
+    return render_template('index.html')
 
   return render_template('create-deck.html')
 
@@ -38,7 +45,7 @@ def deck_profile(deck_id):
 def create_game():
 
   if 'user_id' not in session:
-    return redirect(url_for('login'))
+    return render_template('index.html')
   
   user_id = session['user_id']
   decks = get_decks(user_id)

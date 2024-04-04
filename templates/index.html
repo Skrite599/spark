@@ -6,18 +6,33 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
     <body> 
-        <div class="nav-bar">
+      <nav class="navBar">
+        <div class="navContainer">
+          {% if loggedin %}
           <button onclick="window.location.href='/create-deck'">Create Deck</button>
           <button onclick="window.location.href='/create-game'">Create Game</button>
+          <button onclick="return logout(this);" id="logout">Log Out</button>
+          {% else %}
+          <button onclick="window.location.href='/login'" id="login">Log In</button>
+          {% endif %}
         </div>
-        <div>
-            <input type="text" id="search-input" placeholder="Search Your Decks" oninput="return populateSearch(this)">
+      </nav>
+      <div id="container">        
+          <div id="search-container">
+              <input type="text" id="search-input" placeholder="Search Your Decks" oninput="return populateSearch(this);"/>
+              <div id="result-container">
+                <ul id="deck-list">
+                  {% for deck in decks %}
+                  <div id="individual-result-container">
+                    <li>
+                      <a href="/deck/{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</a>
+                    </li>
+                  </div>
+                  {% endfor %}
+                </ul>
+            </div>
+          </div>
         </div>
-        <ul id="deck-list">
-          {% for deck in decks %}
-            <li><a href="/deck/{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</a></li>
-          {% endfor %}
-        </ul>
         <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>

@@ -18,6 +18,16 @@ def server_login():
     session['username'] = data.get('username')
     session['user_id'] = response['user_id']
     return jsonify(response), 200
+  
+@app.route('/api/logout', methods=['POST'])
+def server_logout():
+  if request and 'user_id' in session:
+    del session['user_id']
+    response = {
+      'status': 'success',
+      'message': 'user was successfully logged out'
+    }
+    return jsonify(response), 200
 
 
 @app.route('/api/deck', methods=['PUT', 'POST'])

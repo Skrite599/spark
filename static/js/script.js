@@ -1,18 +1,29 @@
-function populateSearch(e) {
+function populateSearch(input_data) {
 
-    const searchText = e.value.toLowerCase();
+    var searchText = input_data.value.toLowerCase();
     searchText.replace(/[.*+?^${}()|[\]\\]/g, '');
-    const deckList = document.getElementById('deck-list');
+    searchText = "(^" + searchText + "| " + searchText + ")";
+    const deckList = document.querySelectorAll('#deck-list li');
+    const searchResult = document.getElementById('result-container');
+
+    if (input_data.value == '' || input_data.value == null) {
+        deckList.forEach((item) => {
+            item.style.display = 'none';
+        });
+        searchResult.style.display = 'none';
+        return false;
+    }
 
     var pattern = `${searchText}`;
 
     var regex = new RegExp(pattern);
     
-    Array.from(deckList.children).forEach(item => {
+    deckList.forEach((item) => {
         const currentDeck = item.textContent.toLowerCase();
         
         if (currentDeck.match(regex)) {
           item.style.display = 'block';
+          searchResult.style.display = 'block';
         } else {
           item.style.display = 'none';
         }
@@ -100,6 +111,24 @@ function login(form_data) {
             'Content-Type': 'application/json'
         },
         body: request_body
+    }).then((response) => {
+        response.json().then((data) => {
+            if (data['status'] == 'success') window.location.href = '/';
+        })
+    }).catch((error) => {
+        alert('Something Went Wrong' + error);
+    });
+
+    return false;
+}
+
+function logout(button_data) {
+
+    fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
     }).then((response) => {
         response.json().then((data) => {
             if (data['status'] == 'success') window.location.href = '/';
