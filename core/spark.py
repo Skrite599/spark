@@ -1,6 +1,6 @@
 from data.obj.db import SparkSession
 from data.write import insert_user, insert_deck, insert_game, insert_session
-from data.read import get_user_id, get_decks as get_decks_from_db, get_deck as get_deck_from_db, get_record as get_record_from_db
+from data.read import get_user_id, get_decks as get_decks_from_db, get_deck as get_deck_from_db, get_record as get_record_from_db, get_users_from_db, get_user_from_db
 
 
 def create_user(username):
@@ -92,8 +92,7 @@ def get_decks(user_id):
   else:
     response = {
         'status': 'error',
-        'message': 'Something went wrong',
-        'details': str(session_id)
+        'message': 'Something went wrong'
     }
   session.close_session()
   return response
@@ -119,4 +118,53 @@ def get_record(user_id, deck_id):
     response = get_record_from_db(user_id, deck_id, opened_session)
   session.close_session
   return response
-  
+
+def query_user(userQuery):
+  response = {}
+  session = SparkSession()
+  opened_session = session.open_session()
+  if userQuery == '' or userQuery is None:
+    response = {
+      'status': 'error',
+      'message': 'Something went wrong'
+    }
+    return response
+  users = get_users_from_db(userQuery, opened_session)
+  if users:
+    users_obj = []
+    for user in users:
+      user_obj = {}
+      user_obj['user_id'] = user.user_id
+      user_obj['username'] = user.username
+      user_obj['score'] = user.score
+      users_obj.append(user_obj)
+    response = {
+      'status': 'success',
+      'data': users_obj
+    }
+  else:
+    response = {
+      'status': 'error',
+      'message': 'Something went wrong'
+    }
+  session.close_session()
+  return response
+
+def get_user(user_id):
+  response = {}
+  session = SparkSession()
+  opened_session = session.open_session()
+  user = get_user_from_db(user_id, opened_session)
+  if not user:
+    response = {
+      'status': 'error',
+      'message': 'Something went wrong'
+    }
+    session.close_session()
+    return response
+  response = {
+    'status': 'success',
+    'data': user
+  }
+  session.close_session()
+  return response

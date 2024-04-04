@@ -19,17 +19,33 @@
       </nav>
       <div id="container">        
           <div id="search-container">
-              <input type="text" id="search-input" placeholder="Search Your Decks" oninput="return populateSearch(this);"/>
+              {% if loggedin %}
+              <input type="text" id="search-input" placeholder="Search Your Decks or Users" oninput="return populateSearch(this);"/>
+              {% else %}
+              <input type="text" id="search-input" placeholder="Search Users" oninput="return populateSearch(this);"/>
+              {% endif %}
               <div id="result-container">
-                <ul id="deck-list">
-                  {% for deck in decks %}
-                  <div id="individual-result-container">
-                    <li>
-                      <a href="/deck/{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</a>
-                    </li>
+                {% for deck in decks %}
+                <div id="deck-results">
+                  <div id="header">
+                    <p>Deck(s)</p>
                   </div>
-                  {% endfor %}
-                </ul>
+                  <ul id="deck-list">
+                    <div id="individual-result-container">
+                      <li>
+                        <a href="/deck/{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</a>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+                {% endfor %}
+                <div id="user-results">
+                  <div id="header">
+                    <p>User(s)</p>
+                  </div>
+                  <ul id="user-list">
+                  </ul>
+                </div>
             </div>
           </div>
         </div>

@@ -6,11 +6,13 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
     <body> 
+        <div id="login-container">
         <form id="login-form" onsubmit="return login(this)">
             <label for="login">Login</label>
             <input type="text" id="username" name="username" required placeholder="username"><br>
             <button type="submit">Login</button>
         </form>
+        </div>
         <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"> </script>
     </body>
 </html>

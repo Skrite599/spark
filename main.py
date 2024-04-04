@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session, url_for, redirect
 from flask_cors import CORS
 
-from core.spark import create_deck, submit_game, login, get_decks
+from core.spark import create_deck, submit_game, login, get_decks, query_user
 from views import views
 
 app = Flask(__name__)
@@ -48,8 +48,15 @@ def server_submit_game():
     if (response['status'] == 'error'):
       return jsonify(response), 400 
     return jsonify(response), 200
-
-
+  
+@app.route('/api/users/', methods=['GET'])
+def server_get_users():
+  if request and request.args.get('search'):
+    username_query = request.args.get('search')
+    response = query_user(username_query)
+    if (response['status'] == 'error'):
+      return jsonify(response), 400 
+    return jsonify(response), 200
 
 @app.route('/api/deck', methods=['GET'])
 def server_get_deck():

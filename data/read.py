@@ -58,3 +58,15 @@ def get_record(user_id, deck_id, session):
       'loss': loss
     }
   return None
+
+def get_users_from_db(userQuery, session):
+
+  users = session.query(Users).filter(Users.username.like(userQuery + '%')).all()
+
+  return users
+
+def get_user_from_db(user_id, session):
+
+  user = session.query(Users).filter(Users.user_id==user_id).first()
+
+  return user

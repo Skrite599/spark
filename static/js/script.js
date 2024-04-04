@@ -1,35 +1,77 @@
 function populateSearch(input_data) {
 
-    var searchText = input_data.value.toLowerCase();
-    searchText.replace(/[.*+?^${}()|[\]\\]/g, '');
-    searchText = "(^" + searchText + "| " + searchText + ")";
-    const deckList = document.querySelectorAll('#deck-list li');
+    var searchQuery = input_data.value.toLowerCase();
+    searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '');
+    var searchText = "(^" + searchQuery + "| " + searchQuery + ")";
     const searchResult = document.getElementById('result-container');
 
     if (input_data.value == '' || input_data.value == null) {
-        deckList.forEach((item) => {
-            item.style.display = 'none';
-        });
         searchResult.style.display = 'none';
         return false;
     }
 
     var pattern = `${searchText}`;
 
-    var regex = new RegExp(pattern);
-    
+    var regexQuery = new RegExp(pattern);
+
+    populateDeckResults(regexQuery);
+    populateUserResults(searchQuery);
+
+    searchResult.style.display = 'block';
+
+    return false;
+}
+
+function populateDeckResults(query) {
+
+    const deckList = document.querySelectorAll('#deck-list li');
     deckList.forEach((item) => {
         const currentDeck = item.textContent.toLowerCase();
         
-        if (currentDeck.match(regex)) {
+        if (currentDeck.match(query)) {
           item.style.display = 'block';
-          searchResult.style.display = 'block';
+
         } else {
           item.style.display = 'none';
         }
     });
+}
 
-    return false;
+async function populateUserResults(query) {
+
+    var users = [];
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+
+    users = await fetch('/api/users/?search=' + query, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    users = await users.json();
+
+    if (users['status'] == 'error') {
+        userList.innerHTML = '';
+        return;
+    }
+
+    users['data'].forEach((user) => {
+        var newLi = document.createElement('li');
+        var newA = document.createElement('a');
+        var newDiv = document.createElement('div');
+
+        newA.id = 'user-' + user['user_id'];
+        newA.href = '/user/' + user['user_id'];
+        newA.textContent = user['username'];
+
+        newDiv.id = 'individual-result-container';
+
+        newLi.appendChild(newA);
+        newDiv.appendChild(newLi);
+        userList.appendChild(newDiv);
+    });
 }
 
 function submitDeck(form_data) {

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, session
 
-from core.spark import get_decks, get_deck, get_record
+from core.spark import get_decks, get_deck, get_record, get_user
 
 views = Blueprint(__name__, "views")
 
@@ -57,3 +57,12 @@ def create_game():
 def login():
 
   return render_template('login.html')
+
+@views.route('/user/<user_id>')
+def user_profile(user_id):
+
+  user = get_user(user_id)
+
+  user = user['data']
+
+  return render_template('user-profile.html', user=user)
