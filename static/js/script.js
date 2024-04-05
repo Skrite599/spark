@@ -4,9 +4,11 @@ function populateSearch(input_data) {
     searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '');
     var searchText = "(^" + searchQuery + "| " + searchQuery + ")";
     const searchResult = document.getElementById('result-container');
+    const userResultContainer = document.getElementById('user-results');
 
     if (input_data.value == '' || input_data.value == null) {
         searchResult.style.display = 'none';
+        userResultContainer.style.display = 'none';
         return false;
     }
 
@@ -41,6 +43,7 @@ async function populateUserResults(query) {
 
     var users = [];
     const userList = document.getElementById('user-list');
+    const userResultContainer = document.getElementById('user-results');
     userList.innerHTML = '';
 
     users = await fetch('/api/users/?search=' + query, {
@@ -74,6 +77,8 @@ async function populateUserResults(query) {
         newDiv.appendChild(newLi);
         userList.appendChild(newDiv);
     });
+
+    userResultContainer.style.display = 'block';
 }
 
 function submitDeck(form_data) {
@@ -110,11 +115,19 @@ function submitGame(form_data) {
 
     var request_body = {};
 
-    if (form_data['deck_name'] && form_data['game_win'] && form_data['game_loss']) {
+    if (form_data['deck_name'] && form_data['record']) {
+        record = 0;
+        form_data['record'].forEach((item) => {
+            if (item.checked && item.id == 'game-win') {
+                record += 1;
+            } else if (item.checked && item.id == 'game-loss') {
+                record -= 1;
+            }
+        });
+
         request_body = {
             'deck_name' : form_data['deck_name'].value,
-            'game_win' : form_data['game_win'].value,
-            'game_loss' : form_data['game_loss'].value
+            'record' : record
         }
     }
 
@@ -138,6 +151,13 @@ function submitGame(form_data) {
 }
 
 function login(form_data) {
+
+    fetch('/send', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
 
     var request_body = {};
 
@@ -166,7 +186,7 @@ function login(form_data) {
     return false;
 }
 
-function logout(button_data) {
+function logout() {
 
     fetch('/api/logout', {
         method: 'POST',

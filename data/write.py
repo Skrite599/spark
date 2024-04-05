@@ -34,12 +34,12 @@ def insert_deck(deck_name, deck_score, user_id, session):
   return deck.deck_id if deck else None
 
 
-def insert_game(user_id, deck_id, win, loss, session):
+def insert_game(user_id, deck_id, record, session):
 
   game = None
 
   try:
-    game = Games(user_id=user_id, deck_id=deck_id, win=win, loss=loss)
+    game = Games(user_id=user_id, deck_id=deck_id, record=record)
 
     session.add(game)
 

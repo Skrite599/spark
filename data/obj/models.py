@@ -32,11 +32,10 @@ class Games(Base):
   game_id: Mapped[int] = mapped_column(primary_key=True)
   user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id"))
   deck_id: Mapped[int] = mapped_column(ForeignKey("deck.deck_id"))
-  win: Mapped[int] = mapped_column(nullable=False)
-  loss: Mapped[int] = mapped_column(nullable=False)
+  record: Mapped[int] = mapped_column(nullable=False)
 
   def __repr__(self):
-    return f"Games(game_id={self.game_id}, user_id={self.user_id}, deck=id={self.deck_id}, win={self.win}, loss={self.loss}"
+    return f"Games(game_id={self.game_id}, user_id={self.user_id}, deck=id={self.deck_id}, record={self.record}"
 
 class Sessions(Base):
   __tablename__ = 'sessions'

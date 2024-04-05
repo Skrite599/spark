@@ -136,6 +136,10 @@ html, body {
     list-style-type: none; 
 }
 
+#user-results {
+    display: none;
+}
+
 #user-results #header p {
     margin: 0%;
 }

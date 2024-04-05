@@ -4,6 +4,10 @@ from flask_cors import CORS
 from core.spark import create_deck, submit_game, login, get_decks, query_user
 from views import views
 
+import smtplib
+
+from email.message import EmailMessage
+
 app = Flask(__name__)
 app.register_blueprint(views, url_prefix='/')
 app.secret_key = 'spark-key'
@@ -64,6 +68,22 @@ def server_get_deck():
     session_id = request.headers
     response = get_decks(session_id)
     return jsonify(response), 200
+
+@app.route('/send', methods=['GET'])  
+def send_email():
+  contents = 'hello Martin, this is a test'
+
+  msg = EmailMessage()
+
+  msg.set_content(contents)
+
+  msg['Subject'] = 'This is the test'
+  msg['From'] = 'martin.liriano@gmail.com'
+  msg['To'] = 'sprite599@gmail.com'
+
+  s = smtplib.SMTP('localhost')
+  s.send_message(msg)
+  s.quit()
 
 
 if __name__ == '__main__':

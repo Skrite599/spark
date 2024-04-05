@@ -35,11 +35,10 @@ def submit_game(game_data, user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  win = game_data.get('game_win')
-  loss = game_data.get('game_loss')
+  record = game_data.get('record')
   deck_id = game_data.get('deck_name')
   deck_id = deck_id[5:]
-  game_id = insert_game(user_id, deck_id, win, loss, opened_session)
+  game_id = insert_game(user_id, deck_id, record, opened_session)
   if game_id:
     response = {
         'status': 'success',
@@ -110,12 +109,12 @@ def get_deck(deck_id):
   session.close_session()
   return response
 
-def get_record(user_id, deck_id):
+def get_record(deck_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  if user_id:
-    response = get_record_from_db(user_id, deck_id, opened_session)
+  if deck_id:
+    response = get_record_from_db(deck_id, opened_session)
   session.close_session
   return response
 

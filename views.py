@@ -33,11 +33,12 @@ def create_deck():
 def deck_profile(deck_id):
 
   deck = get_deck(deck_id)
-  user_id = session['user_id']
-  record = get_record(user_id, deck_id)
+  record = get_record(deck_id)
 
-  deck['win'] = record['win'] if record['win'] else None
-  deck['loss'] = record['loss'] if record['loss'] else None
+  print(record)
+
+  deck['win'] = record['win']
+  deck['loss'] = record['loss']
 
   return render_template('deck-profile.html', deck=deck)
 

@@ -47,17 +47,25 @@ def get_deck(deck_id, session):
 
   return deck
 
-def get_record(user_id, deck_id, session):
+def get_record(deck_id, session):
 
-  win = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id, deck_id=deck_id).scalar()
-  loss = session.query(func.count(Games.game_id)).filter(Games.user_id == user_id, deck_id=deck_id).scalar()
+  games = session.query(Games).filter_by(deck_id=deck_id).all()
 
-  if win and loss :
-    return {
+  win = 0
+  loss = 0
+
+  for game in games:
+    if not game.record :
+      continue
+    if game.record > 0 :
+      win = win + game.record
+    else :
+      loss = loss + (game.record * -1)
+
+  return {
       'win': win,
       'loss': loss
-    }
-  return None
+  }
 
 def get_users_from_db(userQuery, session):
 
