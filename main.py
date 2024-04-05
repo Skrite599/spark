@@ -81,7 +81,7 @@ def send_email():
   msg['From'] = 'martin.liriano@gmail.com'
   msg['To'] = 'sprite599@gmail.com'
 
-  s = smtplib.SMTP('localhost')
+  s = smtplib.SMTP('https://aaaadd9c-139a-4add-b043-4e9a4e3f4e01-00-2pytuh4kvha4c.kirk.replit.dev/')
   s.send_message(msg)
   s.quit()
 
