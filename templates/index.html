@@ -8,37 +8,45 @@
     <body> 
       <nav class="navBar">
         <div class="navContainer">
-          {% if loggedin %}
-          <button onclick="window.location.href='/create-deck'">Create Deck</button>
-          <button onclick="window.location.href='/create-game'">Create Game</button>
-          <button onclick="return logout(this);" id="logout">Log Out</button>
-          {% else %}
-          <button onclick="window.location.href='/login'" id="login">Log In</button>
+
+          <div id="right-container">
+            {% if loggedin %}
+            <button onclick="window.location.href='/create-deck'">Create Deck</button>
+            <button onclick="window.location.href='/create-game'">Create Game</button>
+            {% endif %}
+          </div>
+          <div id="left-container">
+            {% if loggedin %}
+            <button onclick="return logout(this);" id="logout">Log Out</button>
+            {% endif %}
+          </div>
+          {% if not loggedin %}
+          <div id="left-container">
+            <button onclick="window.location.href='/login'" id="login">Log In</button>
+          </div>
           {% endif %}
         </div>
       </nav>
       <div id="container">        
           <div id="search-container">
-              {% if loggedin %}
-              <input type="text" id="search-input" placeholder="Search Your Decks or Users" oninput="return populateSearch(this);"/>
-              {% else %}
-              <input type="text" id="search-input" placeholder="Search Users" oninput="return populateSearch(this);"/>
-              {% endif %}
+              <input type="text" id="search-input" {% if loggedin %} placeholder="Search Your Decks or Users" {% else %} placeholder="Search Users" {% endif %} oninput="return populateSearch(this);"/>
               <div id="result-container">
-                {% for deck in decks %}
                 <div id="deck-results">
+                  {% if decks %}
                   <div id="header">
                     <p>Deck(s)</p>
                   </div>
+                  {% endif %}
                   <ul id="deck-list">
+                    {% for deck in decks %}
                     <div id="individual-result-container">
                       <li>
                         <a href="/deck/{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</a>
                       </li>
                     </div>
+                    {% endfor %}
                   </ul>
                 </div>
-                {% endfor %}
                 <div id="user-results">
                   <div id="header">
                     <p>User(s)</p>

@@ -48,6 +48,8 @@ async function populateUserResults(query) {
         headers: {
             'Content-Type': 'application/json'
         }
+    }).catch((error) => {
+        console.log('error', error);
     });
 
     users = await users.json();

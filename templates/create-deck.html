@@ -6,11 +6,29 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
     <body> 
-        <div class="nav-bar">
-          <button onclick="window.location.href='/'">Home</button>
-          <button onclick="window.location.href='/create-game'">Create Game</button>
+      <nav class="navBar">
+        <div class="navContainer">
+
+          <div id="right-container">
+            {% if loggedin %}
+            <button onclick="window.location.href='/create-deck'">Create Deck</button>
+            <button onclick="window.location.href='/create-game'">Create Game</button>
+            {% endif %}
+          </div>
+          <div id="left-container">
+            {% if loggedin %}
+            <button onclick="return logout(this);" id="logout">Log Out</button>
+            {% endif %}
+          </div>
+          {% if not loggedin %}
+          <div id="left-container">
+            <button onclick="window.location.href='/login'" id="login">Log In</button>
+          </div>
+          {% endif %}
         </div>
-        <form id='submit-deck' onsubmit="return submitDeck(this)">
+      </nav>
+      <div id="login-container">        
+        <form id='login-form' onsubmit="return submitDeck(this)">
           
             <label for="deck-name">Deck Name:</label>
             <input type="text" id="deck-name" name="deck_name" required><br>
@@ -20,6 +38,7 @@
   
             <input type="submit" value="Submit">
         </form>
-        <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"> </script>
+        </div>
+    <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>
