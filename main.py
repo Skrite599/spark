@@ -6,7 +6,7 @@ from views import views
 
 import smtplib
 
-from email.message import EmailMessage
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 app.register_blueprint(views, url_prefix='/')
@@ -73,17 +73,15 @@ def server_get_deck():
 def send_email():
   contents = 'hello Martin, this is a test'
 
-  msg = EmailMessage()
-
-  msg.set_content(contents)
+  msg = MIMEText(contents)
 
   msg['Subject'] = 'This is the test'
   msg['From'] = 'martin.liriano@gmail.com'
-  msg['To'] = 'sprite599@gmail.com'
+  msg['To'] = ', '.join('sprite599@gmail.com')
 
-  s = smtplib.SMTP('https://aaaadd9c-139a-4add-b043-4e9a4e3f4e01-00-2pytuh4kvha4c.kirk.replit.dev/')
-  s.send_message(msg)
-  s.quit()
+  with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+       smtp_server.login('martin.liriano@gmail.com', 'hammerd009')
+       smtp_server.sendmail('martin.liriano@gmail.com', 'sprite599@gmail.com', msg.as_string())
 
 
 if __name__ == '__main__':
