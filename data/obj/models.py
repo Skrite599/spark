@@ -10,9 +10,10 @@ class Users(Base):
   user_id: Mapped[int] = mapped_column(primary_key=True)
   username: Mapped[str] = mapped_column(nullable=False)
   score: Mapped[int] = mapped_column(nullable=False)
+  email: Mapped[str] = mapped_column(nullable=False)
 
   def __repr__(self):
-    return f"User(user_id={self.user_id}, username={self.username}, score={self.score}"
+    return f"User(user_id={self.user_id}, username={self.username}, score={self.score}, email={self.email}"
 
 class Deck(Base):
   __tablename__ = 'deck'

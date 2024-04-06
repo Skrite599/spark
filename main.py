@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, session, url_for, redirect
 from flask_cors import CORS
 
-from core.spark import create_deck, submit_game, login, get_decks, query_user
+from core.spark import create_deck, submit_game, login, get_decks, query_user, get_user
 from views import views
 
 import smtplib
-
-from email.mime.text import MIMEText
+import ssl
+from email.message import EmailMessage
 
 app = Flask(__name__)
 app.register_blueprint(views, url_prefix='/')
@@ -76,17 +76,24 @@ def server_get_deck():
 @app.route('/send', methods=['GET'])
 def send_email():
   contents = 'hello Martin, this is a test'
+  password = 'gkmglznsfupaxgrn'
 
-  msg = MIMEText(contents)
+  msg = EmailMessage()
 
   msg['Subject'] = 'This is the test'
   msg['From'] = 'martin.liriano@gmail.com'
-  msg['To'] = ', '.join('sprite599@gmail.com')
+  msg['To'] = 'sprite599@gmail.com'
+  msg.set_content(contents)
 
-  with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-    smtp_server.login('martin.liriano@gmail.com', 'ccez ekei usjr egmv')
-    smtp_server.sendmail('martin.liriano@gmail.com', 'sprite599@gmail.com',
-                         msg.as_string())
+  # Add SSL (layer of security)
+  context = ssl.create_default_context()
+
+  # Log in and send the email
+  with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+    smtp.login('martin.liriano@gmail.com', password)
+    smtp.sendmail('martin.liriano@gmail.com', 'sprite599@gmail.com', msg.as_string())
+  return 200
+
 
 
 if __name__ == '__main__':
