@@ -3,11 +3,27 @@ from data.write import insert_user, insert_deck, insert_game, insert_session
 from data.read import get_user_id, get_decks as get_decks_from_db, get_deck as get_deck_from_db, get_record as get_record_from_db, get_users_from_db, get_user_from_db
 
 
-def create_user(username):
+def create_user(user_data):
+  response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  insert_user(username, opened_session)
+  username = user_data.get('username')
+  email = user_data.get('email')
+  user = insert_user(username, email, opened_session)
+  if not user:
+    response = {
+      'status': 'error',
+      'message': 'user fail to create'
+    }
+  else:
+    response = {
+      'status': 'success',
+      'message': 'user created successfuly',
+      'user_id': user,
+      'username': username
+    }
   session.close_session()
+  return response
 
 
 def create_deck(deck_data, user_id):
@@ -64,12 +80,12 @@ def process_login(username):
   user_id = get_user_id(qry_params, opened_session)
   response = {}
   if not user_id:
-    create_user(username)
-    response['message'] = 'created user'
-    return process_login(username)
+    response['status'] = 'error'
+    response['message'] = 'user does not exist'
   else:
     response['status'] = 'success'
     response['user_id'] = user_id
+    response['message'] = 'user logged in'
   session.close_session()
   return response
 
@@ -149,15 +165,15 @@ def query_user(userQuery):
   session.close_session()
   return response
 
-def get_user(user_id):
+def get_user(user_id, username):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  user = get_user_from_db(user_id, opened_session)
+  user = get_user_from_db(user_id, username, opened_session)
   if not user:
     response = {
       'status': 'error',
-      'message': 'Something went wrong'
+      'message': 'User does not exist'
     }
     session.close_session()
     return response

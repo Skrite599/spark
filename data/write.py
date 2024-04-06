@@ -1,12 +1,12 @@
 from data.obj.models import Users, Sessions, Deck, Games
 
 
-def insert_user(username, session):
+def insert_user(username, email, session):
 
   user = None
 
   try:
-    user = Users(username=username)
+    user = Users(username=username, email=email)
     session.add(user)
     session.commit()
   except Exception as e:

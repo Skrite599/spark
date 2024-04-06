@@ -7,11 +7,12 @@
     </head>
     <body> 
         <div id="login-container">
-        <form id="login-form" onsubmit="return login(this)">
-            <label for="login">Login</label>
-            <input type="text" id="username" name="username" required placeholder="username or email"><br>
-            <button type="submit">Login or Create Account</button>
-        </form>
+            <form id="login-form" onsubmit="return login(this)">
+                <label for="login">Login</label>
+                <input type="text" id="username" name="username" required placeholder="username or email"><br>
+                <button type="submit">Login</button>
+            </form>
+            <button id="signup" onclick="window.location.href='/sign-up'">Sign Up</button>
         </div>
         <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"> </script>
     </body>

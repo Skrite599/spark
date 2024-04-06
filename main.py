@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session, url_for, redirect
 from flask_cors import CORS
 
-from core.spark import create_deck, submit_game, login, get_decks, query_user, get_user
+from core.spark import create_deck, submit_game, login, get_decks, query_user, get_user, create_user
 from views import views
 
 import smtplib
@@ -22,12 +22,25 @@ def server_login():
     session['username'] = data.get('username')
     session['user_id'] = response['user_id']
     return jsonify(response), 200
+  
+  
+@app.route('/api/signup', methods=['POST'])
+def server_signup():
+  if request.is_json and 'username' not in session:
+    data = request.json
+    response = create_user(data)
+    if response['status'] != 'success':
+      return jsonify(response), 400
+    session['user_id'] = response['user_id']
+    session['username'] = response['username']
+    return jsonify(response), 200
 
 
 @app.route('/api/logout', methods=['POST'])
 def server_logout():
-  if request and 'user_id' in session:
+  if request and 'user_id' in session and 'username' in session:
     del session['user_id']
+    del session['username']
     response = {
         'status': 'success',
         'message': 'user was successfully logged out'

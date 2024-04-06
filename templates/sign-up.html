@@ -1,0 +1,40 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spark</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body> 
+      <nav class="navBar">
+        <div class="navContainer">
+          <div id="right-container">
+            {% if loggedin %}
+            <button onclick="window.location.href='/create-deck'">Create Deck</button>
+            <button onclick="window.location.href='/create-game'">Create Game</button>
+            {% endif %}
+          </div>
+          <div id="left-container">
+            {% if loggedin %}
+            <button onclick="return logout(this);" id="logout">Log Out</button>
+            {% endif %}
+          </div>
+          {% if not loggedin %}
+          <div id="left-container">
+            <button onclick="window.location.href='/login'" id="login">Log In</button>
+          </div>
+          {% endif %}
+        </div>
+      </nav>
+      <div id="login-container">        
+        <form id='login-form' onsubmit="return signup(this)">
+            <label for="username">Username</label>
+            <input type="text" value="username" id="username" required><br/>
+            <label for="username">Email</label>
+            <input type="text" value="email" id="email" required><br/>
+            <input type="submit" value="Submit">
+        </form>
+      </div>
+    <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+</html>

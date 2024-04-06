@@ -67,3 +67,8 @@ def user_profile(user_id):
   user = user['data']
 
   return render_template('user-profile.html', user=user)
+
+@views.route('/sign-up')
+def sign_up():
+
+  return render_template('sign-up.html')

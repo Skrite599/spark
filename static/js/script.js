@@ -152,13 +152,6 @@ function submitGame(form_data) {
 
 function login(form_data) {
 
-    fetch('/send', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    });
-
     var request_body = {};
 
     if (form_data['username']) {
@@ -192,7 +185,35 @@ function logout() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        response.json().then((data) => {
+            if (data['status'] == 'success') window.location.href = '/';
+        })
+    }).catch((error) => {
+        alert('Something Went Wrong' + error);
+    });
+
+    return false;
+}
+
+function signup(form_data) {
+
+    var request_body = {};
+
+    if (form_data['username'] && form_data['email']) {
+        request_body['username'] = form_data['username'].value
+        request_body['email'] = form_data['email'].value
+    }
+
+    request_body = JSON.stringify(request_body);
+
+    fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
+        body: request_body
     }).then((response) => {
         response.json().then((data) => {
             if (data['status'] == 'success') window.location.href = '/';
