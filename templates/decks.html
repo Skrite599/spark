@@ -1,0 +1,46 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spark</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body> 
+        <nav class="navBar">
+            <div class="navContainer">
+                <div id="right-container">
+                <a href="/">Spark</a>
+                {% if loggedin %}
+                <a href="/create-deck">Create Deck</a>
+                <a href="/create-game">Create Game</a>
+                {% endif %}
+            </div>
+            <div id="left-container">
+            {% if loggedin %}
+                <a onclick="return logout(this);" id="logout">Log Out</a>
+            {% endif %}
+            </div>
+            {% if not loggedin %}
+            <div id="left-container">
+                <a href="/login" id="login">Log In</a>
+            </div>
+            {% endif %}
+            </div>
+        </nav>
+      <div id="login-container">
+            <table border="1" id="login-form">
+                <tr>
+                    <th>Deck Name</th>
+                    <th>Deck Score</th>
+                </tr>
+                {% for deck in decks %}
+                <tr>
+                    <td>{{ deck['deck_name']}}</td>
+                    <td>{{ deck['deck_score']}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+</html>

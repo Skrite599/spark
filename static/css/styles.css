@@ -143,3 +143,56 @@ html, body {
 #user-results #header p {
     margin: 0%;
 }
+
+.banner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.banner-container h1 {
+    color: #fff;
+    letter-spacing: 8px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    width: 50%;
+    padding-top: 10vh;
+}
+
+#banner {
+    color: #fff;
+    letter-spacing: 8px;
+    padding-top: 0vh;
+}
+
+#banner h1 {
+    color: #fff;
+    letter-spacing: 8px;
+}
+
+#search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 0vh;
+}
+
+.navContainer a:hover {
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.navContainer a {
+    text-decoration: none;
+    color: inherit;
+    padding: 0vw .5vw;
+}

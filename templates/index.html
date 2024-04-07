@@ -8,26 +8,30 @@
     <body> 
       <nav class="navBar">
         <div class="navContainer">
-
           <div id="right-container">
+            <a href="/">Spark</a>
             {% if loggedin %}
-            <button onclick="window.location.href='/create-deck'">Create Deck</button>
-            <button onclick="window.location.href='/create-game'">Create Game</button>
+            <a href="/create-deck">Create Deck</a>
+            <a href="/create-game">Create Game</a>
+            <a href="/decks">View Decks</a>
             {% endif %}
           </div>
           <div id="left-container">
             {% if loggedin %}
-            <button onclick="return logout(this);" id="logout">Log Out</button>
+            <a onclick="return logout(this);" id="logout">Log Out</a>
             {% endif %}
           </div>
           {% if not loggedin %}
           <div id="left-container">
-            <button onclick="window.location.href='/login'" id="login">Log In</button>
+            <a href="/login" id="login">Log In</a>
           </div>
           {% endif %}
         </div>
       </nav>
-      <div id="container">        
+      <div id="container"> 
+          <div class='banner-container'>
+            <h1>SPARK</h1>
+          </div>      
           <div id="search-container">
               <input type="text" id="search-input" {% if loggedin %} placeholder="Search Your Decks or Users" {% else %} placeholder="Search Users" {% endif %} oninput="return populateSearch(this);"/>
               <div id="result-container">
@@ -47,7 +51,6 @@
                     {% endfor %}
                   </ul>
                 </div>
-                {% if loggedin %}
                 <div id="user-results">
                   <div id="header">
                     <p>User(s)</p>
@@ -55,7 +58,6 @@
                   <ul id="user-list">
                   </ul>
                 </div>
-                {% endif %}
             </div>
           </div>
         </div>

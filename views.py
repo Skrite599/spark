@@ -23,36 +23,49 @@ def index():
 @views.route('/create-deck')
 def create_deck():
 
+  loggedin = False
+
   if 'user_id' not in session:
     return render_template('index.html')
+  
+  if 'user_id' in session:
+    loggedin = True
 
-  return render_template('create-deck.html')
+  return render_template('create-deck.html', loggedin=loggedin)
 
 
 @views.route('/deck/<deck_id>')
 def deck_profile(deck_id):
 
+  loggedin = False
+
   deck = get_deck(deck_id)
   record = get_record(deck_id)
 
-  print(record)
+  if 'user_id' in session:
+    loggedin = True
 
   deck['win'] = record['win']
   deck['loss'] = record['loss']
 
-  return render_template('deck-profile.html', deck=deck)
+  return render_template('deck-profile.html', deck=deck, loggedin=loggedin)
 
 @views.route('/create-game')
 def create_game():
 
+  loggedin = False
+
   if 'user_id' not in session:
     return render_template('index.html')
+  
+  if 'user_id' in session:
+    loggedin = True
   
   user_id = session['user_id']
   decks = get_decks(user_id)
   decks = decks['decks']
 
-  return render_template('create-game.html', decks=decks)
+  return render_template('create-game.html', decks=decks, loggedin=loggedin)
 
 @views.route('/login')
 def login():
@@ -62,13 +75,33 @@ def login():
 @views.route('/user/<user_id>')
 def user_profile(user_id):
 
+  loggedin = False
+
   user = get_user(user_id)
 
   user = user['data']
 
-  return render_template('user-profile.html', user=user)
+  if 'user_id' in session:
+    loggedin = True
+
+  return render_template('user-profile.html', user=user, loggedin=loggedin)
 
 @views.route('/sign-up')
 def sign_up():
 
   return render_template('sign-up.html')
+
+@views.route('/decks')
+def decks_view():
+
+  loggedin = False
+  user_id = None
+
+  if 'user_id' in session:
+    loggedin = True
+    user_id = session['user_id']
+
+  decks = get_decks(user_id)
+  decks = decks['decks']
+
+  return render_template('decks.html', loggedin=loggedin, decks=decks)

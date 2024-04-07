@@ -165,11 +165,11 @@ def query_user(userQuery):
   session.close_session()
   return response
 
-def get_user(user_id, username):
+def get_user(user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  user = get_user_from_db(user_id, username, opened_session)
+  user = get_user_from_db(user_id, opened_session)
   if not user:
     response = {
       'status': 'error',

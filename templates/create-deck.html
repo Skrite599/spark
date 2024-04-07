@@ -8,23 +8,23 @@
     <body> 
       <nav class="navBar">
         <div class="navContainer">
-
-          <div id="right-container">
-            {% if loggedin %}
-            <button onclick="window.location.href='/create-deck'">Create Deck</button>
-            <button onclick="window.location.href='/create-game'">Create Game</button>
+            <div id="right-container">
+              <a href="/">Spark</a>
+              {% if loggedin %}
+              <a href="/create-game">Create Game</a>
+              <a href="/decks">View Decks</a>
+              {% endif %}
+            </div>
+            <div id="left-container">
+              {% if loggedin %}
+              <a onclick="return logout(this);" id="logout">Log Out</a>
+              {% endif %}
+            </div>
+            {% if not loggedin %}
+            <div id="left-container">
+              <a href="/login" id="login">Log In</a>
+            </div>
             {% endif %}
-          </div>
-          <div id="left-container">
-            {% if loggedin %}
-            <button onclick="return logout(this);" id="logout">Log Out</button>
-            {% endif %}
-          </div>
-          {% if not loggedin %}
-          <div id="left-container">
-            <button onclick="window.location.href='/login'" id="login">Log In</button>
-          </div>
-          {% endif %}
         </div>
       </nav>
       <div id="login-container">        
