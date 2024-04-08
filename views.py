@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, session
 
 from core.spark import get_decks, get_deck, get_record, get_user
 

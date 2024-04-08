@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify, session, url_for, redirect
+from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 
-from core.spark import create_deck, submit_game, login, get_decks, query_user, get_user, create_user
+from core.spark import create_deck, submit_game, login, query_user, create_user
 from views import views
 
 import smtplib
@@ -19,9 +19,19 @@ def server_login():
   if request.is_json:
     data = request.json
     response = login(data)
+    
+    if response['message'] == 'user does not exist' :
+      return jsonify(response), 400
+    
     session['username'] = data.get('username')
     session['user_id'] = response['user_id']
     return jsonify(response), 200
+  else:
+    response = {
+      'status': 'error',
+      'message': 'incorrect request was sent'
+    }
+    return jsonify(response), 400
   
   
 @app.route('/api/signup', methods=['POST'])
@@ -34,6 +44,12 @@ def server_signup():
     session['user_id'] = response['user_id']
     session['username'] = response['username']
     return jsonify(response), 200
+  else:
+    response = {
+      'status': 'error',
+      'message': 'incorrect request was sent'
+    }
+    return jsonify(response), 400
 
 
 @app.route('/api/logout', methods=['POST'])
@@ -46,6 +62,12 @@ def server_logout():
         'message': 'user was successfully logged out'
     }
     return jsonify(response), 200
+  else:
+    response = {
+      'status': 'error',
+      'message': 'incorrect request was sent'
+    }
+    return jsonify(response), 400
 
 
 @app.route('/api/deck', methods=['PUT', 'POST'])
@@ -55,6 +77,12 @@ def server_submit_deck():
     user_id = session['user_id']
     response = create_deck(data, user_id)
     return jsonify(response), 200
+  else:
+    response = {
+      'status': 'error',
+      'message': 'incorrect request was sent'
+    }
+    return jsonify(response), 400
 
 
 @app.route('/api/game', methods=['POST'])
@@ -66,6 +94,12 @@ def server_submit_game():
     if (response['status'] == 'error'):
       return jsonify(response), 400
     return jsonify(response), 200
+  else:
+    response = {
+      'status': 'error',
+      'message': 'incorrect request was sent'
+    }
+    return jsonify(response), 400
 
 
 @app.route('/api/users/', methods=['GET'])
@@ -76,15 +110,12 @@ def server_get_users():
     if (response['status'] == 'error'):
       return jsonify(response), 400
     return jsonify(response), 200
-
-
-@app.route('/api/deck', methods=['GET'])
-def server_get_deck():
-  if request.headers:
-    session_id = request.headers
-    response = get_decks(session_id)
-    return jsonify(response), 200
-
+  else:
+    response = {
+      'status': 'error',
+      'message': 'incorrect request was sent'
+    }
+    return jsonify(response), 400
 
 @app.route('/send', methods=['GET'])
 def send_email():

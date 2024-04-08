@@ -171,6 +171,7 @@ function login(form_data) {
     }).then((response) => {
         response.json().then((data) => {
             if (data['status'] == 'success') window.location.href = '/';
+            else if (data['status'] == 'error' && data['message'] == 'user does not exist') window.location.href = '/sign-up'
         })
     }).catch((error) => {
         alert('Something Went Wrong' + error);
