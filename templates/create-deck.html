@@ -3,42 +3,109 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Spark</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_styles.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body> 
-      <nav class="navBar">
+      <div class="root">
         <div class="navContainer">
-            <div id="right-container">
+          <nav class="navBar">
               <a href="/">Spark</a>
-              {% if loggedin %}
-              <a href="/create-game">Create Game</a>
-              <a href="/decks">View Decks</a>
-              {% endif %}
-            </div>
-            <div id="left-container">
-              {% if loggedin %}
-              <a onclick="return logout(this);" id="logout">Log Out</a>
-              {% endif %}
-            </div>
-            {% if not loggedin %}
-            <div id="left-container">
-              <a href="/login" id="login">Log In</a>
-            </div>
-            {% endif %}
+              <div id="link-container">
+                <div id="utility-container">
+                  {% if loggedin %}
+                  <a class="links" href="/create-game">Create Game</a>
+                  <a class="links" href="/decks">View Decks</a>
+                  {% endif %}
+                </div>
+                <div id="user-container">
+                  {% if loggedin %}
+                  <a class="links" onclick="return logout(this);" id="logout">Log Out</a>
+                  {% endif %}
+                </div>
+                {% if not loggedin %}
+                <div id="user-container">
+                  <a class="links" href="/login" id="login">Log In</a>
+                </div>
+                {% endif %}
+              </div>
+              <a href="javascript:void(0);" class="icon" onclick="return displayMenu(this)">
+                <i class="fa fa-bars"></i>
+              </a>
+          </nav>
         </div>
-      </nav>
-      <div id="login-container">        
-        <form id='login-form' onsubmit="return submitDeck(this)">
-          
-            <label for="deck-name">Deck Name:</label>
-            <input type="text" id="deck-name" name="deck_name" required><br>
-  
-            <label for="deck-score">Score:</label>
-            <input type="number" id="deck-score" name="deck_score" required><br>
-  
-            <input type="submit" value="Submit">
-        </form>
-        </div>
-    <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <div class="main container">        
+          <form class='form' id="deck" onsubmit="return submitDeck(this)">
+              <div class="title name container">
+                <span>Create a deck:</span>
+              </div>
+              <div class="input container separator">
+                <div class="name container">
+                  <span id="name">Deck Name:</span>
+                </div>
+                <div class="deckInputContainer">
+                  <input type="text" class="deckName" name="deck_name" placeholder="Enter your deck name..." required>
+                </div>
+              </div>
+
+              <div id="score-name-container" class="separator">
+                <span id="name">Score:</span>
+              </div>
+              <div class="score container">
+                  <div id="level-selector">
+                    <button type="button" id="low power" value="low" class="selector" onclick="return toggleButton(this)">
+                      <span>Low</span>
+                    </button>
+                    <button type="button" id="med power" value="med" class="selector" onclick="return toggleButton(this)">
+                      <span>Medium</span>
+                    </button>
+                    <button type="button" id="high power" value="high" class="selector" onclick="return toggleButton(this)">
+                      <span>High</span>
+                    </button>
+                    <button type="button" id="cedh power" value="cedh" class="selector" onclick="return toggleButton(this)">
+                      <span>CEDH</span>
+                    </button>
+                  </div>
+                  <ul>
+                    <li><button type="button" class="direction prev" onclick="return shiftScore(this);"><img src="{{ url_for('static', filename='css/assets/arrow_left.png') }}"></img></button></li>
+                    <div id="value">
+                      <span></span>
+                    </div>
+                    <li><button type="button" class="direction next" onclick="return shiftScore(this);"><img src="{{ url_for('static', filename='css/assets/arrow_right.png') }}"></button></li>
+                  </ul>
+              </div>
+
+              <div class="tooltip container">
+                <div class="tooltip low">
+                  <p class="title">Low Power</p>
+                  <p class="info">Your deck is low powered. It may be built around a theme or not necessarily having winning.</p>
+                  <p class="highlight">Battlecruiser</p>
+                </div>
+                <div class="tooltip med">
+                  <p class="title">Medium Power</p>
+                  <p class="info">Your deck is medium powered. It may be an out of the box pre-con, or a more focused deck with some removal. You want to win while also having a good time!</p>
+                  <p class="highlight">Pre-Con</p>
+                </div>
+                <div class="tooltip high">
+                  <p class="title">High Power</p>
+                  <p class="info">Your deck is high powered. It is a focused, it knows what it needs to do to win and it can do it efficiently. You don't mind combos.</p>
+                  <p class="highlight">Tutors, Combo</p>
+                </div>
+                <div class="tooltip cedh">
+                  <p class="title">CEDH</p>
+                  <p class="info">Your deck is CEDH. It is focused on playing the best cards. You don't necessarily care about themes or fun. You just want to win and do it fast.</p>
+                  <p class="highlight">Tutors, Combo, Fast Mana</p>
+                </div>
+              </div>
+
+              <div class="button container separator">
+                <button type="submit" id="create-deck" value="Create Deck">
+                  <span>Create Deck</span>
+                </button>
+              </div>
+          </form>
+          </div>
+      </div>
+      <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>

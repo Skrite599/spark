@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
     <body> 
+      <div class="root">
       <nav class="navBar">
         <div class="navContainer">
           <div id="right-container">
@@ -27,23 +28,53 @@
           {% endif %}
         </div>
       </nav>
-      <div id="login-container">        
-        <form id='login-form' onsubmit="return submitGame(this)">
-            <label for="deck-name">Deck</label>
-            <select id="deck-selector" name="deck_name">
-                {% for deck in decks %}
-                <option value="deck-{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</option>
-                {% endfor %}
-            </select><br/>
-            <label for="game-record-win" id=>Win:</label>
-            <input type="radio" id="game-win" name="record"><br>
-  
-            <label for="game-record-loss" id=>Loss:</label>
-            <input type="radio" id="game-loss" name="record"><br>
+      <div class="main container game">        
+        <form class='form' id="game" onsubmit="return submitGame(this)">
+          <div class="title name container">
+            <span>Track your wins!</span>
+          </div>
+          <div class="input container">
+            <div class="name container">
+              <span id="name">Deck</span>
+            </div>
 
-            <input type="submit" value="Submit">
+            <div class="deckInput container">
+              <select id="deck-selector" name="deck_name" class="deckName" required>
+                  <option value="" id="deck-default" selected disabled hidden>Select your deck...</option>
+                  {% for deck in decks %}
+                  <option value="deck-{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</option>
+                  {% endfor %}
+              </select>
+            </div>    
+          </div>
+
+            <div class="input container" id="record">
+              <div class="radio container" id="winInput">
+                <div class="name container">
+                  <span id="name">Win</span>
+                </div>
+                <div class="radioInput">
+                  <input type="radio" id="game-win" name="record">
+                </div>
+              </div>
+              <div class="radio container" id="lossInput">
+                <div class="name container">
+                  <span id="name">Loss</span>
+                </div>
+                <div class="radioInput">
+                  <input type="radio" id="game-loss" name="record">
+                </div>
+              </div>
+            </div>
+            
+            <div class="button container">
+              <button type="submit" id="create-deck" value="Create Deck">
+                <span>Create Game</span>
+              </button>
+            </div>
         </form>
       </div>
+    </div>
     <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>

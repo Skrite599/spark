@@ -27,19 +27,41 @@
             {% endif %}
             </div>
         </nav>
-      <div id="login-container">
-            <table border="1" id="login-form">
-                <tr>
-                    <th>Deck Name</th>
-                    <th>Deck Score</th>
-                </tr>
+        <div class="header">
+            <span>Decks</span>
+        </div>
+      <div class="main container cards">
+            <div class="cardsContainer">
                 {% for deck in decks %}
-                <tr>
-                    <td>{{ deck['deck_name']}}</td>
-                    <td>{{ deck['deck_score']}}</td>
-                </tr>
+                <div class="card">
+                    <div id="name">
+                        <span>{{ deck['deck_name']}}</span>
+                    </div>
+                    <div id="score">
+                        <span>{{ deck['deck_score']}}</span>
+                    </div>
+                </div>
                 {% endfor %}
-            </table>
+            <!-- <div class="deckCards container">
+                <table id="deck-table">
+                    <div class="container" id="header-row">
+                        <tr>
+                            <th>Deck Name</th>
+                            <th>Deck Score</th>
+                        </tr>
+                    </div>
+
+                    {% for deck in decks %}
+                    <div class="container" id="data-row">
+                        <tr>
+                            <td>{{ deck['deck_name']}}</td>
+                            <td>{{ deck['deck_score']}}</td>
+                        </tr>
+                    </div>
+                    {% endfor %}
+                </table>
+            </div> -->
+            </div>
         </div>
         <script type='text/javascript' src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
