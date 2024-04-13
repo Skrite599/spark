@@ -1,0 +1,404 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Sans-Serif;
+    color: #252525;
+}
+
+.root {
+    background-color: #ffd1ab;
+    height: 100%;
+    width: 100%;
+}
+
+.navContainer {
+    overflow: hidden;
+    background-color: #252525;
+    position: relative;
+    z-index: 9999999;
+}
+
+.navContainer #link-container {
+    display: none;
+}
+
+.navContainer a {
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+    transition: all 0.5s;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.navContainer a:hover {
+    opacity: 1;
+    color: #ffa860;
+}
+
+.navContainer a.icon {
+    background-color: #383838;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.navContainer a.icon i {
+    color: #fff
+}
+
+.navContainer a.icon:hover {
+    background-color: #ffa860;
+    color: #383838;
+}
+
+.navContainer .active {
+    background-color: #383838;
+}
+
+.main.container {
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 15px;
+    max-height: 80vh;
+    max-width: 100vw;
+    position: absolute;
+}
+
+.form {
+    padding: 5vh 5vw;
+    font-size: 5vw;
+    font-weight: bold;
+}
+
+.form .title.name.container {
+    font-size: 10vw;
+}
+
+.form .input.container {
+    width: 100%;
+}
+
+.form .input.container input {
+    width: 85vw;
+    height: 40px;
+    background-color: #c7c7c7;
+    border: none;
+    background-image:none;
+    box-shadow: none;
+    border-radius: 7px;
+    font-size: 15px;
+    padding: 0px 15px;
+}
+
+.form .input.container input:focus {
+    border-radius: 7px;
+    border: solid 1px #ffa860;
+    outline: none;
+    box-shadow: 0 0 10px #ffa860;
+}
+
+.form .score.container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.form .score.container #value {
+    background-color: #ffa860;
+    height: 8vh;
+    width: 16vw;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0vh 4vw;
+}
+
+.form .score.container #value span {
+    color: #fff;
+    font-size: 8vw;
+}
+
+.form .score.container button {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    margin: 0 1vw;
+    border-radius: 5px;
+    background-color: #ffa860;
+    color: #fff;
+    box-shadow: none;
+    height: 3vh;
+    width: 6vw;
+    transition: 0.3s;
+}
+
+.form .score.container button:hover {
+    opacity: 1;
+    color: #ffa860;
+}
+
+.form .score.container ul {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    list-style: none;
+    padding-top: 2vh;
+}
+
+.form .score.container li {
+    display: flex;
+}
+
+.form .score.container .direction img {
+    height: 4vh;
+    width: 6vw;
+    overflow: unset;
+    opacity: 0.5;
+}
+
+.form .score.container .direction img.active {
+    opacity: 1;
+}
+
+.form .score.container .direction {
+    background: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    overflow: unset;
+}
+
+.separator {
+    padding-top: 4vh;
+}
+
+.form .score.container #level-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    max-height: 4vh;
+}
+
+.form .score.container #level-selector .selector {
+    background: none;
+    border-radius: 10px;
+    border: solid 3px #ffa860;
+    height: 4vh;
+    width: 18vw;
+}
+
+.form .score.container #level-selector .selector.active {
+    background-color: #ffa860;
+}
+
+.form .score.container #level-selector .selector span {
+    font-weight: bold;
+}
+
+.form .score.container #level-selector .selector.active span {
+    color: #fff;
+}
+
+.form .tooltip.container {
+    border-radius: 10px;
+    background-color: #c7c7c7;
+    margin-top: 2vh;
+    height: 20vh;
+    width: 100%;
+    box-shadow: inset 0px 0px 5px #313131;
+    font-weight: normal;
+}
+
+.form#deck .tooltip.container.active {
+    background-color: #e9e9e9;
+}
+
+.form .tooltip.container div {
+    display: none;
+    margin: 0vh 1vh;
+}
+
+.form .tooltip.container div p {
+    font-size: 4vw;
+    padding: 1vh 2vw;
+}
+
+.form .button.container {
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+}
+
+.form .button.container button {
+    border-radius: 5px;
+    width: 20vw;
+    height: 5vh;
+    background-color: #ffa860;
+    color: #fff;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+    align-self: center;
+} 
+
+.form .button.container button span {
+    color: #fff;
+    font-weight: bold;
+    font-size: 3vw;
+}
+
+@media only screen and (min-width: 768px) {
+
+
+    .main.container {
+        max-height: 90vh;
+    }
+
+    .form .score.container #value {
+        height: 8vh;
+        width: 13vw;
+    }
+
+    .form .score.container #level-selector .selector {
+        height: 5vh;
+        width: 18vw;
+    }
+
+    .form .score.container #level-selector {
+        max-height: 5vh;
+    }
+
+    .form .score.container #level-selector .selector span {
+        font-size: 3vw;
+    }
+
+    .form .score.container .direction img {
+        height: 4vh;
+        width: 5vw;
+    }
+
+    .form .tooltip.container {
+        border-radius: 10px;
+        background-color: #c7c7c7;
+        margin-top: 2vh;
+        height: 20vh;
+        width: 100%;
+        box-shadow: inset 0px 0px 5px #313131;
+        font-weight: normal;
+    }
+
+    .form .tooltip.container div p {
+        font-size: 3vw;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .form .input.container input {
+        height: 50px;
+    }
+
+    .form .score.container #level-selector .selector span {
+        font-size: 3vw
+    }
+
+    .form .tooltip.container div p {
+        font-size: 3vw;
+    }
+
+    .form .input.container input {
+        font-size: 2vw;
+    }
+
+    .form .score.container #value {
+        height: 8vh;
+        width: 15vw;
+    }
+}
+
+@media only screen and (min-width:1025px) {
+
+    .navContainer #link-container {
+        display: flex;
+    }
+
+    .navContainer #link-container {
+        display: flex;
+    }
+
+    .form .title.name.container {
+        font-size: 5vw;
+    }
+
+    .form {
+        font-size: 2vw;
+        width: 45vw;
+    }
+
+    .form .input.container input {
+        width: 100%;
+        font-size: 1vw;
+    }
+
+    .form .score.container #level-selector .selector {
+        height: 4vh;
+        width: 6vw;
+    }
+
+    .form .score.container #level-selector .selector span {
+        font-size: 1vw;
+    }
+
+    .form .score.container #value {
+        height: 7vh;
+        width: 5vw;
+        margin: 0;
+    }
+
+    .form .score.container #value span {
+        font-size: 3vw
+    }
+
+    .form .score.container .direction img {
+        height: 4vh;
+        width: 2vw;
+        margin: 0;
+    }
+
+    .form .score.container .direction {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .form .tooltip.container div {
+        margin: 0vh 2vw;
+    }
+
+    .form .tooltip.container div p {
+        font-size: 1vw;
+    }
+
+    .form .tooltip.container {
+        max-width: 60%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .form .button.container button {
+        width: 10vw;
+    }
+
+    .form .button.container button span {
+        font-size: 1vw;
+    }
+}
