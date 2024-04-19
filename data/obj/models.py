@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql.schema import ForeignKey
+from sqlalchemy import Text
 
 Base = declarative_base()
 
@@ -47,3 +48,23 @@ class Sessions(Base):
 
   def __repr__(self):
     return f"Sessions(session_id={self.session_id}, user_id={self.user_id}, created_at={self.created_at})"
+  
+class Card(Base):
+  __tablename__ = 'card'
+
+  card_id: Mapped[int] = mapped_column(primary_key=True)
+  scryfall_id: Mapped[str] = mapped_column(nullable=False)
+  oracle_id: Mapped[str] = mapped_column(nullable=False)
+  image_uri: Mapped[str] = mapped_column(nullable=False)
+  uri: Mapped[str] = mapped_column(nullable=False)
+  name: Mapped[str] = mapped_column(nullable=False)
+  mana_cost: Mapped[str] = mapped_column(nullable=False)
+  type_line: Mapped[str] = mapped_column(nullable=False)
+  oracle_text: Mapped[str] = mapped_column(nullable=False)
+  power: Mapped[str] = mapped_column(nullable=False)
+  toughness: Mapped[str] = mapped_column(nullable=False)
+  colors: Mapped[str] = mapped_column(nullable=False)
+  color_identity: Mapped[str] = mapped_column(nullable=False)
+  set_name: Mapped[str] = mapped_column(nullable=False)
+  set_code: Mapped[str] = mapped_column(nullable=False)
+  cmc: Mapped[float] = mapped_column(nullable=False)

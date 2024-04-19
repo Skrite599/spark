@@ -84,12 +84,14 @@ async function populateUserResults(query) {
 function submitDeck(form_data) {
 
     var request_body = {}
-    const activeElement = form_data.querySelector('[status="active"]');
+    const scoreElement = form_data.querySelector('.score.container ul');
+    const deckListElement = form_data.querySelector('.deckInputContainer textarea')
 
-    if (form_data['deck_name'] && activeElement) {
+    if (form_data['deck_name'] && scoreElement && deckListElement) {
         request_body = {
             'deck_name' : form_data['deck_name'].value,
-            'deck_score' : activeElement.value
+            'deck_score' : scoreElement.innerText,
+            'deck_list': deckListElement.value
         }
     }
     
@@ -274,6 +276,8 @@ function shiftScore(button) {
 
     const scoreValueDiv = document.querySelector('.score.container #value span');
 
+    if (!scoreValueDiv.innerText || scoreValueDiv.innerText == '') return;
+
     const lowButton = document.querySelector(".score.container #level-selector button[value='low']");
     const medButton = document.querySelector(".score.container #level-selector button[value='med']");
     const highButton = document.querySelector(".score.container #level-selector button[value='high']");
@@ -300,7 +304,7 @@ function shiftScore(button) {
         shiftButton(cedhButton);
     }
 
-    setToolTip(scoreValue);
+    // setToolTip(scoreValue);
 
 }
 
@@ -340,7 +344,7 @@ function setScore(span) {
         arrowImg.classList.add('active');
     });
 
-    setToolTip(score);
+    // setToolTip(score);
 }
 
 function toggleButton(button) {
@@ -364,4 +368,14 @@ function displayMenu(navA) {
     } else {
         ultilityContainer.style.display = "block";
     }
+}
+
+function displayInput(div) {
+    const deckInput = document.querySelector('.form#deck .input.container#deck-input');
+    const playerInput = document.querySelector('.form#game .input.container#player-input');
+    
+    div.style.display = 'none';
+
+    if (deckInput) deckInput.style.display = 'block';
+    if (playerInput) playerInput.style.display = 'block';
 }

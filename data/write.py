@@ -1,4 +1,4 @@
-from data.obj.models import Users, Sessions, Deck, Games
+from data.obj.models import Users, Sessions, Deck, Games, Card
 
 
 def insert_user(username, email, session):
@@ -68,3 +68,52 @@ def insert_session(session_id, user_id, session):
     session.rollback()
 
   return session_token.session_id if session_token else None
+
+def insert_card(card_data, session):
+
+  card = None
+
+  scryfall_id = card_data['scryfall_id']
+  oracle_id = card_data['oracle_id']
+  image_uri = card_data['image_uris']
+  uri = card_data['uri']
+  name = card_data['name']
+  mana_cost = card_data['mana_cost']
+  cmc = card_data['cmc']
+  power = card_data['power']
+  toughness = card_data['toughness']
+  type_line = card_data['type_line']
+  oracle_text = card_data['oracle_text']
+  colors = card_data['colors']
+  color_identity = card_data['color_identity']
+  set_name = card_data['set_name']
+  set = card_data['set']
+
+  try:
+    card = Card(
+      scryfall_id=scryfall_id,
+      oracle_id = oracle_id,
+      image_uri = image_uri,
+      uri = uri,
+      name = name,
+      mana_cost = mana_cost,
+      cmc = cmc,
+      power = power,
+      toughness = toughness,
+      type_line = type_line,
+      oracle_text = oracle_text,
+      colors = colors,
+      color_identity = color_identity,
+      set_name = set_name,
+      set_code = set
+    )
+
+    session.add(card)
+
+    session.commit()
+
+  except Exception as e:
+    print(f"Error occurred: {e}")
+    session.rollback()
+
+  return card.card_id if card else None

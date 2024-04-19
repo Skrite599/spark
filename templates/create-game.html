@@ -3,32 +3,59 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Spark</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_styles.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body> 
       <div class="root">
-      <nav class="navBar">
-        <div class="navContainer">
-          <div id="right-container">
-            <a href="/">Spark</a>
-            {% if loggedin %}
-            <a href="/create-deck">Create Deck</a>
-            <a href="/decks">View Decks</a>
-            {% endif %}
-          </div>
-          <div id="left-container">
-            {% if loggedin %}
-            <a onclick="return logout(this);" id="logout">Log Out</a>
-            {% endif %}
-          </div>
-          {% if not loggedin %}
-          <div id="left-container">
-            <a href="/login" id="login">Log In</a>
-          </div>
-          {% endif %}
+        <div class="navContainer mobile">
+          <nav class="navBar">
+              <a href="/" id="title">Spark</a>
+              <div id="link-container">
+                <div id="utility-container">
+                  {% if loggedin %}
+                  <a class="links" href="/create-deck">Create Deck</a>
+                  <a class="links" href="/decks">View Decks</a>
+                  {% endif %}
+                </div>
+                <div id="user-container">
+                  {% if loggedin %}
+                  <a class="links" onclick="return logout(this);" id="logout">Log Out</a>
+                  {% endif %}
+                </div>
+                {% if not loggedin %}
+                <div id="user-container">
+                  <a class="links" href="/login" id="login">Log In</a>
+                </div>
+                {% endif %}
+              </div>
+              <a href="javascript:void(0);" class="icon" onclick="return displayMenu(this)">
+                <i class="fa fa-bars"></i>
+              </a>
+          </nav>
         </div>
-      </nav>
-      <div class="main container game">        
+        <div class="navContainer web">
+          <nav class="navBar">
+                <div id="utility-container">
+                  <a href="/" id="title">Spark</a>
+                  {% if loggedin %}
+                  <a class="links" href="/create-deck">Create Deck</a>
+                  <a class="links" href="/decks">View Decks</a>
+                  {% endif %}
+                </div>
+                <div id="user-container">
+                  {% if loggedin %}
+                  <a class="links" onclick="return logout(this);" id="logout">Log Out</a>
+                  {% endif %}
+                </div>
+                {% if not loggedin %}
+                <div id="user-container">
+                  <a class="links" href="/login" id="login">Log In</a>
+                </div>
+                {% endif %}
+          </nav>
+        </div>
+      <div class="main container">        
         <form class='form' id="game" onsubmit="return submitGame(this)">
           <div class="title name container">
             <span>Track your wins!</span>
@@ -38,14 +65,28 @@
               <span id="name">Deck</span>
             </div>
 
-            <div class="deckInput container">
-              <select id="deck-selector" name="deck_name" class="deckName" required>
-                  <option value="" id="deck-default" selected disabled hidden>Select your deck...</option>
-                  {% for deck in decks %}
-                  <option value="deck-{{deck['deck_id']}}" id="deck-{{deck['deck_id']}}">{{deck['deck_name']}}</option>
-                  {% endfor %}
-              </select>
+            <div class="input container deck">
+              <div class="deckInputContainer">
+                <input type="text" name="deck_name" placeholder="Enter your deck name..." required>
+              </div>
             </div>    
+          </div>
+
+          <div class="option add players" onclick="return displayInput(this);">
+            <img src="{{ url_for('static', filename='css/assets/add.png') }}"></img>
+          </div>
+
+          <div class="input container player" id="player-input">
+            <div class="name container">
+              <span id="name">Player(s):</span>
+            </div>
+            <div class="playerInputContainer">
+              <input type="text" name="username" placeholder="Search Username..." required>
+            </div>
+          </div>
+          
+          <div class="player result container">
+            <ul id="player-list"></ul>
           </div>
 
             <div class="input container" id="record">
@@ -67,9 +108,9 @@
               </div>
             </div>
             
-            <div class="button container">
+            <div class="button container separator">
               <button type="submit" id="create-deck" value="Create Deck">
-                <span>Create Game</span>
+                <span>Submit</span>
               </button>
             </div>
         </form>

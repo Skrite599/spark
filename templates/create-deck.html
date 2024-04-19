@@ -8,9 +8,9 @@
     </head>
     <body> 
       <div class="root">
-        <div class="navContainer">
+        <div class="navContainer mobile">
           <nav class="navBar">
-              <a href="/">Spark</a>
+              <a href="/" id="title">Spark</a>
               <div id="link-container">
                 <div id="utility-container">
                   {% if loggedin %}
@@ -34,22 +34,56 @@
               </a>
           </nav>
         </div>
-        <div class="main container">        
-          <form class='form' id="deck" onsubmit="return submitDeck(this)">
+        <div class="navContainer web">
+          <nav class="navBar">
+                <div id="utility-container">
+                  <a href="/" id="title">Spark</a>
+                  {% if loggedin %}
+                  <a class="links" href="/create-game">Create Game</a>
+                  <a class="links" href="/decks">View Decks</a>
+                  {% endif %}
+                </div>
+                <div id="user-container">
+                  {% if loggedin %}
+                  <a class="links" onclick="return logout(this);" id="logout">Log Out</a>
+                  {% endif %}
+                </div>
+                {% if not loggedin %}
+                <div id="user-container">
+                  <a class="links" href="/login" id="login">Log In</a>
+                </div>
+                {% endif %}
+          </nav>
+        </div>
+        <div class="main container deckForm">        
+          <form class='form' id="deck" onsubmit="return submitDeck(this);">
               <div class="title name container">
                 <span>Create a deck:</span>
               </div>
-              <div class="input container separator">
+              <div class="input container">
                 <div class="name container">
                   <span id="name">Deck Name:</span>
                 </div>
                 <div class="deckInputContainer">
-                  <input type="text" class="deckName" name="deck_name" placeholder="Enter your deck name..." required>
+                  <input type="text" name="deck_name" placeholder="Enter your deck name..." required>
+                </div>
+              </div>
+
+              <div class="option add deck" onclick="return displayInput(this);">
+                <img src="{{ url_for('static', filename='css/assets/add.png') }}"></img>
+              </div>
+
+              <div class="input container" id="deck-input">
+                <div class="name container">
+                  <span id="name">Deck List:</span>
+                </div>
+                <div class="deckInputContainer">
+                  <textarea type="text" name="deck_link" required></textarea>
                 </div>
               </div>
 
               <div id="score-name-container" class="separator">
-                <span id="name">Score:</span>
+                <span id="name">Power Level:</span>
               </div>
               <div class="score container">
                   <div id="level-selector">
@@ -74,7 +108,7 @@
                     <li><button type="button" class="direction next" onclick="return shiftScore(this);"><img src="{{ url_for('static', filename='css/assets/arrow_right.png') }}"></button></li>
                   </ul>
               </div>
-
+<!-- 
               <div class="tooltip container">
                 <div class="tooltip low">
                   <p class="title">Low Power</p>
@@ -96,11 +130,11 @@
                   <p class="info">Your deck is CEDH. It is focused on playing the best cards. You don't necessarily care about themes or fun. You just want to win and do it fast.</p>
                   <p class="highlight">Tutors, Combo, Fast Mana</p>
                 </div>
-              </div>
+              </div> -->
 
               <div class="button container separator">
                 <button type="submit" id="create-deck" value="Create Deck">
-                  <span>Create Deck</span>
+                  <span>Submit</span>
                 </button>
               </div>
           </form>

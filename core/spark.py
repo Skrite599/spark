@@ -1,6 +1,9 @@
 from data.obj.db import SparkSession
-from data.write import insert_user, insert_deck, insert_game, insert_session
+from data.write import insert_user, insert_deck, insert_game, insert_session, insert_card
 from data.read import get_user_id, get_decks as get_decks_from_db, get_deck as get_deck_from_db, get_record as get_record_from_db, get_users_from_db, get_user_from_db
+
+import requests
+import json
 
 
 def create_user(user_data):
@@ -25,26 +28,47 @@ def create_user(user_data):
   session.close_session()
   return response
 
+def process_deck(deck_list):
+  cards = []
+  card = {}
+  for line in deck_list:
+    qty = int(line[0:1])
+    line = line[2:]
+    name = ''
+    for char in line:
+      if char == '(':
+        break
+      if char != ' ':
+        name += char
+    oracle_id = get_oracle_id(name)
+    card = {
+      'qty': qty,
+      'oracle_id': oracle_id
+    }
+    cards.append(card)
+    return cards
+
 
 def create_deck(deck_data, user_id):
   response = {}
   session = SparkSession()
   opened_session = session.open_session()
-  deck_name = deck_data.get('deck_name')
-  deck_score = 0
-  if deck_data.get('deck_score'):
-    deck_score = deck_data['deck_score']
-  deck_id = insert_deck(deck_name, deck_score, user_id, opened_session)
-  if deck_id:
-    response = {
-        'status': 'success',
-        'message': 'Deck created successfully',
-        'deck_id': deck_id
-    }
-  else:
-    response = {'status': 'error', 'message': 'Deck creation failed'}
-  session.close_session()
-  return response
+  deck_name = deck_data['deck_name']
+  deck_score = deck_data['deck_score']
+  deck_cards = process_deck(deck_data['deck_list'])
+
+  # deck_id = insert_deck(deck_name,deck_score, deck_cards, user_id, opened_session)
+
+  # if deck_id:
+  #   response = {
+  #       'status': 'success',
+  #       'message': 'Deck created successfully',
+  #       'deck_id': deck_id
+  #   }
+  # else:
+  #   response = {'status': 'error', 'message': 'Deck creation failed'}
+  # session.close_session()
+  # return response
 
 
 def submit_game(game_data, user_id):
@@ -183,3 +207,121 @@ def get_user(user_id):
   }
   session.close_session()
   return response
+
+def process_combos():
+
+  # count = 0
+  
+  # with open("C:/Users/Skrite/Desktop/variants.json", 'r', encoding="utf8") as file:
+  #   for line in file:
+  #     data = json.loads(line)
+  #     variants = data['variants']
+  #     for v in variants:
+  #       count += 1
+
+  # print(count)
+
+  response = requests.get('https://backend.commanderspellbook.com/features/?limit=100')
+
+  data = response.json()
+  while response.status_code == 200:
+    if 'results' in data: 
+      for result in data['results']:
+        combo_result = {}
+        combo_result['id'] = result['id']
+        combo_result['name'] = result['name']
+        print(combo_result)
+    if data['next'] is None:
+      break
+    response = requests.get(data['next'])
+    data = response.json()
+
+
+def process_cards():
+
+  session = SparkSession()
+  opened_session = session.open_session()
+
+  with open("C:/Users/Skrite\Desktop/all-cards-20240414212309.json", 'r', encoding="utf8") as file:
+
+    count = 0
+
+    for line in file:
+      card = {}
+      if count == 0:
+        count += 1
+      elif count == 456272:
+        break
+      else:
+        line = line[:-2]
+        data = json.loads(line)
+        if data['legalities']['commander'] == 'legal' and data['lang'] == 'en' and data['set'] != 'sld':
+          card['scryfall_id'] = data['id']
+          if 'oracle_id' not in data:
+            if 'card_faces' in data:
+              card['oracle_id'] = data['card_faces'][0]['oracle_id']
+          else:
+            card['oracle_id'] = data['oracle_id']
+          if 'image_uris' not in data:
+            if 'card_faces' in data:
+              card['image_uris'] = data['card_faces'][0]['image_uris']['png']
+          else:
+            card['image_uris'] = data['image_uris']['png']
+          card['uri'] = data['uri']
+          card['name'] = data['name']
+          if 'mana_cost' not in data:
+            if 'card_faces' in data:
+              card['mana_cost'] = data['card_faces'][0]['mana_cost']
+          else:
+            card['mana_cost'] = data['mana_cost']
+          if 'cmc' in data:
+            card['cmc'] = data['cmc']
+          else:
+            card['cmc'] = 0.0
+          if 'type_line' not in data:
+            if 'card_faces' in data:
+              card['type_line'] = data['card_faces'][0]['type_line']
+          else:
+            card['type_line'] = data['type_line']
+          if 'oracle_text' in data:
+            card['oracle_text'] = data['oracle_text']
+          else:
+            card['oracle_text'] = ''
+          if 'power' in data:
+            card['power'] = data['power']
+          else:
+            card['power'] = ''
+          if 'toughness' in data:
+            card['toughness'] = data['toughness']
+          else:
+            card['toughness'] = ''
+          colors = ''
+          color = ''
+          if 'mana_cost' not in data:
+            if 'card_faces' in data:
+              colors = data['card_faces'][0]['colors']
+          else:
+            colors = data['colors']
+          for c in colors:
+            color += c
+          card['colors'] = color
+
+          colors_identity = ''
+          color_identity = ''
+          if 'color_identity' not in data:
+            if 'card_faces' in data:
+              colors_identity = data['card_faces'][0]['color_identity']
+          else:
+            colors_identity = data['color_identity']
+          for c in colors_identity:
+            color_identity += c
+          card['color_identity'] = color_identity
+          card['set_name'] = data['set_name']
+          card['set'] = data['set']
+
+          print(card)
+
+          insert_card(card, opened_session)
+        count += 1
+
+  session.close_session()
